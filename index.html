@@ -30,7 +30,7 @@
       <div class="service-container">
         <div class="card">
           <h3>📱 Phone Repair</h3>
-          <p>Screen, FRP, unlocking, flashing, battery replacement.</p>
+          <p>Screen replacement, unlocking, flashing, battery repair.</p>
         </div>
 
         <div class="card">
@@ -40,17 +40,17 @@
 
         <div class="card">
           <h3>🔌 Home Appliances</h3>
-          <p>Fans, cookers, kettles, irons, electrical faults.</p>
+          <p>Electrical repairs for home devices.</p>
         </div>
 
         <div class="card">
           <h3>🌐 Web Development</h3>
-          <p>Websites, apps, systems, hosting solutions.</p>
+          <p>Websites, systems, hosting solutions.</p>
         </div>
 
         <div class="card">
           <h3>🎨 Graphic Design</h3>
-          <p>Logos, posters, branding, social media design.</p>
+          <p>Logos, posters, branding design.</p>
         </div>
 
         <div class="card">
@@ -60,29 +60,49 @@
       </div>
     </section>
 
+    <!-- CONTACT + QUOTE SYSTEM -->
     <section class="contact">
-      <h2>Contact Us</h2>
-      <p>📍 Blantyre, Malawi</p>
+      <h2>Request a Service</h2>
+      <p>Send us your request or contact us directly below.</p>
 
-      <!-- CALL BUTTONS -->
-      <a class="btn call" href="tel:+265882015682"> 📞 Call Main Number </a>
+      <form class="form">
+        <input type="text" id="name" placeholder="Your Name" required />
 
-      <a class="btn call secondary" href="tel:+265991230780"> 📞 Call Backup Number </a>
+        <input type="tel" id="phone" placeholder="Your Phone Number" required />
 
-      <br /><br />
+        <select id="service" required>
+          <option value="">Select Service</option>
+          <option>Phone Repair</option>
+          <option>Computer Repair</option>
+          <option>Home Appliances</option>
+          <option>Web Development</option>
+          <option>Graphic Design</option>
+          <option>Networking</option>
+        </select>
 
-      <!-- WHATSAPP BUTTONS -->
-      <a class="btn whatsapp" href="https://wa.me/265882015682" target="_blank">
-        💬 WhatsApp Main
-      </a>
+        <textarea id="message" placeholder="Describe your problem" required></textarea>
 
-      <a class="btn whatsapp secondary" href="https://wa.me/265991230780" target="_blank">
-        💬 WhatsApp Backup
-      </a>
+        <button type="button" onclick="sendToWhatsApp()">📩 Send Request on WhatsApp</button>
+      </form>
+
+      <hr style="margin: 30px 0" />
+
+      <h3>📞 Direct Contacts</h3>
+
+      <div class="contact-buttons">
+        <a href="tel:26582015682" class="call">📞 Call 1</a>
+        <a href="https://wa.me/26582015682" target="_blank" class="whatsapp">💬 WhatsApp 1</a>
+
+        <a href="tel:265991230780" class="call">📞 Call 2</a>
+        <a href="https://wa.me/265991230780" target="_blank" class="whatsapp">💬 WhatsApp 2</a>
+      </div>
     </section>
 
     <footer>
       <p>© 2026 KandoTech Solutions</p>
+      <p>📞 0820 156 82 | 0991 230 780</p>
     </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>

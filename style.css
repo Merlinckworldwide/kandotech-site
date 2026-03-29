@@ -5,14 +5,12 @@ body {
   color: white;
 }
 
-/* HEADER */
 header {
   text-align: center;
   padding: 20px;
   background: #020617;
 }
 
-/* NAV */
 nav {
   display: flex;
   justify-content: center;
@@ -26,14 +24,12 @@ nav a {
   text-decoration: none;
 }
 
-/* HERO */
 .hero {
   text-align: center;
   padding: 60px 20px;
   background: linear-gradient(to right, #2563eb, #0ea5e9);
 }
 
-/* SERVICES */
 .services {
   padding: 40px;
   text-align: center;
@@ -58,49 +54,72 @@ nav a {
   background: #334155;
 }
 
-/* CONTACT */
 .contact {
   padding: 40px;
   text-align: center;
   background: #1e293b;
 }
 
-/* BUTTONS */
-.btn {
-  display: inline-block;
-  margin: 10px;
-  padding: 12px 20px;
+.form {
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form input,
+.form select,
+.form textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+.form textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+.form button {
+  padding: 12px;
+  background: #25d366;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form button:hover {
+  transform: scale(1.05);
+}
+
+/* CONTACT BUTTONS */
+.contact-buttons {
+  display: grid;
+  gap: 10px;
+  max-width: 300px;
+  margin: auto;
+}
+
+.call {
+  background: #3b82f6;
+  padding: 10px;
+  border-radius: 10px;
   color: white;
   text-decoration: none;
-  border-radius: 30px;
-  font-weight: bold;
-  transition: 0.3s;
 }
 
-/* CALL BUTTON */
-.call {
-  background: #f97316;
-}
-
-.call:hover {
-  transform: scale(1.05);
-}
-
-/* WHATSAPP BUTTON */
 .whatsapp {
   background: #25d366;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
 }
 
-.whatsapp:hover {
-  transform: scale(1.05);
-}
-
-/* SECONDARY BUTTON */
-.secondary {
-  background: #64748b;
-}
-
-/* FOOTER */
 footer {
   text-align: center;
   padding: 20px;
