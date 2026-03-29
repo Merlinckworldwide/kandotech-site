@@ -18,7 +18,7 @@ function sendToWhatsApp() {
     'Problem: ' +
     message;
 
-  let url = 'https://wa.me/26582015682?text=' + text;
+  let url = 'https://wa.me/265882015682?text=' + text;
 
   window.open(url, '_blank');
 }
