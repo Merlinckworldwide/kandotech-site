@@ -3,215 +3,410 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KandoTech Solutions</title>
+    <title>KandoTech Solutions — Malawi</title>
+    <meta
+      name="description"
+      content="Professional tech solutions in Malawi. Phone repair, web development, networking, graphic design and more."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
-
-    <style>
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #0f172a;
-        color: white;
-      }
-
-      /* NAVBAR */
-      nav {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 50px;
-        background: #020617;
-      }
-
-      nav h1 {
-        color: #38bdf8;
-      }
-
-      nav a {
-        color: white;
-        margin-left: 20px;
-        text-decoration: none;
-      }
-
-      /* HERO */
-      .hero {
-        text-align: center;
-        padding: 80px 20px;
-      }
-
-      .hero h2 {
-        font-size: 40px;
-      }
-
-      .hero p {
-        color: #94a3b8;
-      }
-
-      /* SECTIONS */
-      .section {
-        padding: 60px 40px;
-      }
-
-      .section h2 {
-        text-align: center;
-        margin-bottom: 40px;
-      }
-
-      /* GRID */
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-      }
-
-      /* CARD */
-      .card {
-        background: #1e293b;
-        padding: 20px;
-        border-radius: 10px;
-      }
-
-      .card h3 {
-        color: #38bdf8;
-      }
-
-      /* CONTACT */
-      .contact {
-        text-align: center;
-      }
-
-      .contact a {
-        display: inline-block;
-        margin: 10px;
-        padding: 12px 20px;
-        background: #38bdf8;
-        color: black;
-        border-radius: 5px;
-        text-decoration: none;
-      }
-
-      /* FOOTER */
-      footer {
-        text-align: center;
-        padding: 20px;
-        background: #020617;
-      }
-    </style>
   </head>
-
   <body>
-    <!-- NAVBAR -->
-    <nav>
-      <h1>KandoTech</h1>
-      <div>
-        <a href="#">Home</a>
-        <a href="#services">Services</a>
-        <a href="#contact">Contact</a>
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+
+    <!-- LOADER -->
+    <div class="loader" id="loader">
+      <div class="loader-inner">
+        <div class="loader-logo">KT</div>
+        <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+        <div class="loader-text" id="loaderText">Initializing…</div>
       </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+      <a href="#" class="nav-logo">
+        <span class="logo-kando">Kando</span><span class="logo-tech">Tech</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" class="nav-link">Home</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#why" class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link nav-cta">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-      <h2>WE FIX. WE BUILD. WE CREATE.</h2>
-      <p>Professional Tech Solutions in Malawi</p>
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-inner">
+        <a href="#" class="mob-link" id="mob-home">Home</a>
+        <a href="#services" class="mob-link" id="mob-services">Services</a>
+        <a href="#why" class="mob-link" id="mob-why">About</a>
+        <a href="#contact" class="mob-link" id="mob-contact">Contact</a>
+        <div class="mob-contacts">
+          <a href="tel:+265882015682">📞 0882 015 682</a>
+          <a href="https://wa.me/265882015682" target="_blank">💬 WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero" id="home">
+      <canvas class="hero-canvas" id="heroCanvas"></canvas>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge reveal-item">
+          <span class="badge-dot"></span>
+          Professional Tech Solutions — Malawi
+        </div>
+
+        <h1 class="hero-title">
+          <span class="line reveal-item" style="--d: 100ms">We <em>Fix.</em></span>
+          <span class="line reveal-item" style="--d: 200ms"
+            >We <em class="em-outline">Build.</em></span
+          >
+          <span class="line reveal-item" style="--d: 300ms">We <em>Create.</em></span>
+        </h1>
+
+        <p class="hero-desc reveal-item" style="--d: 400ms">
+          From cracked screens to full-stack systems — KandoTech delivers expert technology services
+          across Malawi. Fast, reliable, and built to last.
+        </p>
+
+        <div class="hero-actions reveal-item" style="--d: 500ms">
+          <a href="#contact" class="btn-primary">
+            <span>Get In Touch</span>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="#services" class="btn-ghost">View Services</a>
+        </div>
+
+        <div class="hero-stats reveal-item" style="--d: 600ms">
+          <div class="stat">
+            <div class="stat-n" data-count="12">0</div>
+            <div class="stat-l">Services</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-n" data-count="100">0</div>
+            <div class="stat-l">% Committed</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <div class="stat-n">24/7</div>
+            <div class="stat-l">Support</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-scroll-hint">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+      </div>
     </section>
 
-    <!-- SERVICES -->
+    <!-- TICKER -->
+    <div class="ticker-wrap">
+      <div class="ticker-track" id="tickerTrack">
+        <span>Phone Repair</span><span class="sep">✦</span> <span>Web Development</span
+        ><span class="sep">✦</span> <span>Graphic Design</span><span class="sep">✦</span>
+        <span>Networking</span><span class="sep">✦</span> <span>Cybersecurity</span
+        ><span class="sep">✦</span> <span>Training</span><span class="sep">✦</span>
+        <span>Business Solutions</span><span class="sep">✦</span> <span>Computer Repair</span
+        ><span class="sep">✦</span> <span>Social Media</span><span class="sep">✦</span>
+        <span>Home Appliances</span><span class="sep">✦</span> <span>Phone Repair</span
+        ><span class="sep">✦</span> <span>Web Development</span><span class="sep">✦</span>
+        <span>Graphic Design</span><span class="sep">✦</span> <span>Networking</span
+        ><span class="sep">✦</span> <span>Cybersecurity</span><span class="sep">✦</span>
+        <span>Training</span><span class="sep">✦</span> <span>Business Solutions</span
+        ><span class="sep">✦</span> <span>Computer Repair</span><span class="sep">✦</span>
+        <span>Social Media</span><span class="sep">✦</span> <span>Home Appliances</span
+        ><span class="sep">✦</span>
+      </div>
+    </div>
+
+    <!-- ═══ SERVICES ═══ -->
     <section class="section" id="services">
-      <h2>OUR SERVICES</h2>
-
-      <div class="grid">
-        <div class="card">
-          <h3>📱 Phone Repair</h3>
-          <p>
-            Flashing, FRP bypass, unlocking, rooting, virus removal, boot repair, data recovery,
-            optimization, IMEI repair and more.
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag reveal-up">What We Do</div>
+          <h2 class="section-title reveal-up" style="--d: 100ms">Our Services</h2>
+          <p class="section-desc reveal-up" style="--d: 200ms">
+            Comprehensive tech solutions for individuals and businesses across Malawi.
           </p>
         </div>
 
-        <div class="card">
-          <h3>🔧 Phone Hardware</h3>
-          <p>
-            Screen replacement, battery, charging port, motherboard repair, camera, speaker, water
-            damage repair.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>💻 Computer Repair</h3>
-          <p>
-            Windows installation, virus removal, driver install, hardware repair, upgrades,
-            troubleshooting.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>🏠 Home Appliances</h3>
-          <p>
-            Kettle, iron, cooker, water heater, wiring, TV repair, electrical faults and
-            installation.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>📱 Social Media Services</h3>
-          <p>
-            Account setup, business pages, ads, content creation, branding, engagement management.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>🎨 Graphic Design</h3>
-          <p>
-            Logos, posters, flyers, business cards, branding kits, thumbnails, editing, animation.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>🌐 Web & Software</h3>
-          <p>Website development, apps, databases, hosting setup, SEO, full-stack systems.</p>
-        </div>
-
-        <div class="card">
-          <h3>🌐 Networking</h3>
-          <p>WiFi setup, LAN/WAN, CCTV, servers, cloud, VPN, backups, network security.</p>
-        </div>
-
-        <div class="card">
-          <h3>💼 Digital Services</h3>
-          <p>Email setup, CV creation, printing, cloud setup, file conversion, online services.</p>
-        </div>
-
-        <div class="card">
-          <h3>🎓 Training</h3>
-          <p>Phone repair training, web development, networking, cybersecurity, business skills.</p>
-        </div>
-
-        <div class="card">
-          <h3>🏢 Business Solutions</h3>
-          <p>POS systems, inventory, CRM, payment setup, automation, online store setup.</p>
-        </div>
-
-        <div class="card">
-          <h3>🚀 Advanced Tech</h3>
-          <p>Cybersecurity, AI basics, server setup, smart home, virtualization, automation.</p>
+        <div class="services-grid">
+          <div class="service-card reveal-up" style="--d: 0ms">
+            <div class="card-num">01</div>
+            <div class="card-icon">📱</div>
+            <h3>Phone Repair</h3>
+            <p>
+              Flashing, FRP bypass, unlocking, rooting, virus removal, boot repair, data recovery,
+              IMEI repair and more.
+            </p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 50ms">
+            <div class="card-num">02</div>
+            <div class="card-icon">🔧</div>
+            <h3>Phone Hardware</h3>
+            <p>
+              Screen replacement, battery, charging port, motherboard repair, camera, speaker, water
+              damage repair.
+            </p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 100ms">
+            <div class="card-num">03</div>
+            <div class="card-icon">💻</div>
+            <h3>Computer Repair</h3>
+            <p>
+              Windows installation, virus removal, driver install, hardware repair, upgrades, full
+              troubleshooting.
+            </p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 150ms">
+            <div class="card-num">04</div>
+            <div class="card-icon">⚡</div>
+            <h3>Home Appliances</h3>
+            <p>
+              Kettle, iron, cooker, water heater, wiring, TV repair, electrical faults and
+              installation.
+            </p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 200ms">
+            <div class="card-num">05</div>
+            <div class="card-icon">📣</div>
+            <h3>Social Media</h3>
+            <p>
+              Account setup, business pages, ads, content creation, branding, engagement management.
+            </p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 250ms">
+            <div class="card-num">06</div>
+            <div class="card-icon">🎨</div>
+            <h3>Graphic Design</h3>
+            <p>
+              Logos, posters, flyers, business cards, branding kits, thumbnails, editing, animation.
+            </p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 300ms">
+            <div class="card-num">07</div>
+            <div class="card-icon">🌐</div>
+            <h3>Web & Software</h3>
+            <p>Website development, apps, databases, hosting setup, SEO, full-stack systems.</p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 350ms">
+            <div class="card-num">08</div>
+            <div class="card-icon">📡</div>
+            <h3>Networking</h3>
+            <p>WiFi setup, LAN/WAN, CCTV, servers, cloud, VPN, backups, network security.</p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 400ms">
+            <div class="card-num">09</div>
+            <div class="card-icon">💼</div>
+            <h3>Digital Services</h3>
+            <p>
+              Email setup, CV creation, printing, cloud setup, file conversion, online services.
+            </p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 450ms">
+            <div class="card-num">10</div>
+            <div class="card-icon">🎓</div>
+            <h3>Training</h3>
+            <p>
+              Phone repair, web development, networking, cybersecurity, and business skills
+              training.
+            </p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card reveal-up" style="--d: 500ms">
+            <div class="card-num">11</div>
+            <div class="card-icon">🏢</div>
+            <h3>Business Solutions</h3>
+            <p>POS systems, inventory, CRM, payment setup, automation, online store setup.</p>
+            <div class="card-arrow">→</div>
+          </div>
+          <div class="service-card featured reveal-up" style="--d: 550ms">
+            <div class="card-num">12</div>
+            <div class="card-icon">🚀</div>
+            <h3>Advanced Tech</h3>
+            <p>Cybersecurity, AI basics, server setup, smart home, virtualization, automation.</p>
+            <div class="card-arrow">→</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="section contact" id="contact">
-      <h2>Contact Us</h2>
-
-      <a href="tel:+265882015682">📞 Call 1: 0882015682</a>
-      <a href="tel:+265991230780">📞 Call 2: 0991230780</a>
-
-      <a href="https://wa.me/265882015682">💬 WhatsApp 1</a>
-      <a href="https://wa.me/265991230780">💬 WhatsApp 2</a>
+    <!-- ═══ WHY US ═══ -->
+    <section class="section why-section" id="why">
+      <div class="container">
+        <div class="why-grid">
+          <div class="why-left">
+            <div class="section-tag reveal-up">Why KandoTech</div>
+            <h2 class="section-title reveal-up" style="--d: 100ms">Built<br />Different.</h2>
+            <p class="why-desc reveal-up" style="--d: 200ms">
+              We're not just another repair shop. KandoTech is a full technology partner — whether
+              you're a student, a startup, or an established business in Malawi.
+            </p>
+            <div class="pillars">
+              <div class="pillar reveal-up" style="--d: 250ms">
+                <div class="pillar-icon">⚡</div>
+                <div>
+                  <h4>Fast Turnaround</h4>
+                  <p>Most repairs done same-day. No unnecessary delays, no excuses.</p>
+                </div>
+              </div>
+              <div class="pillar reveal-up" style="--d: 300ms">
+                <div class="pillar-icon">🛡️</div>
+                <div>
+                  <h4>Quality Guaranteed</h4>
+                  <p>Every job backed by our commitment to lasting, clean results.</p>
+                </div>
+              </div>
+              <div class="pillar reveal-up" style="--d: 350ms">
+                <div class="pillar-icon">💰</div>
+                <div>
+                  <h4>Affordable Pricing</h4>
+                  <p>Premium quality at prices that work for Malawian clients.</p>
+                </div>
+              </div>
+              <div class="pillar reveal-up" style="--d: 400ms">
+                <div class="pillar-icon">📍</div>
+                <div>
+                  <h4>Locally Based</h4>
+                  <p>We understand the local market and deliver solutions that fit.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="why-right reveal-up" style="--d: 200ms">
+            <div class="why-card-stack">
+              <div class="wcard wcard-1">
+                <div class="wcard-num">12+</div>
+                <div class="wcard-label">Service Categories</div>
+              </div>
+              <div class="wcard wcard-2">
+                <div class="wcard-num">🇲🇼</div>
+                <div class="wcard-label">Proudly Malawian</div>
+              </div>
+              <div class="wcard wcard-3">
+                <div class="wcard-num">24/7</div>
+                <div class="wcard-label">WhatsApp Support</div>
+              </div>
+              <div class="wcard-bg-text">KT</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- ═══ CONTACT ═══ -->
+    <section class="section contact-section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag reveal-up">Get In Touch</div>
+          <h2 class="section-title reveal-up" style="--d: 100ms">Contact Us</h2>
+          <p class="section-desc reveal-up" style="--d: 200ms">
+            Two lines. Always available. WhatsApp is fastest — we usually respond within minutes.
+          </p>
+        </div>
+        <div class="contact-grid">
+          <a href="tel:+265882015682" class="contact-card reveal-up" style="--d: 0ms">
+            <div class="cc-type">Call</div>
+            <div class="cc-icon">📞</div>
+            <div class="cc-label">Line 1</div>
+            <div class="cc-number">0882 015 682</div>
+            <div class="cc-arrow">↗</div>
+          </a>
+          <a href="tel:+265991230780" class="contact-card reveal-up" style="--d: 100ms">
+            <div class="cc-type">Call</div>
+            <div class="cc-icon">📞</div>
+            <div class="cc-label">Line 2</div>
+            <div class="cc-number">0991 230 780</div>
+            <div class="cc-arrow">↗</div>
+          </a>
+          <a
+            href="https://wa.me/265882015682"
+            target="_blank"
+            class="contact-card whatsapp reveal-up"
+            style="--d: 200ms"
+          >
+            <div class="cc-type">WhatsApp</div>
+            <div class="cc-icon">💬</div>
+            <div class="cc-label">Chat 1</div>
+            <div class="cc-number">0882 015 682</div>
+            <div class="cc-arrow">↗</div>
+          </a>
+          <a
+            href="https://wa.me/265991230780"
+            target="_blank"
+            class="contact-card whatsapp reveal-up"
+            style="--d: 300ms"
+          >
+            <div class="cc-type">WhatsApp</div>
+            <div class="cc-icon">💬</div>
+            <div class="cc-label">Chat 2</div>
+            <div class="cc-number">0991 230 780</div>
+            <div class="cc-arrow">↗</div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
     <footer>
-      <p>© 2026 KandoTech Solutions | Built by Chikondi</p>
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">Kando<span>Tech</span></div>
+          <p>Professional Tech Solutions<br />in Malawi 🇲🇼</p>
+        </div>
+        <div class="footer-links">
+          <a href="#">Home</a>
+          <a href="#services">Services</a>
+          <a href="#why">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-contact">
+          <a href="tel:+265882015682">0882 015 682</a>
+          <a href="tel:+265991230780">0991 230 780</a>
+          <a href="https://wa.me/265882015682" target="_blank">WhatsApp Us</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 KandoTech Solutions</span>
+        <span>Built by Chikondi</span>
+      </div>
     </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>
