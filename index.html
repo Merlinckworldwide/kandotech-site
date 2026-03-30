@@ -5,104 +5,213 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KandoTech Solutions</title>
     <link rel="stylesheet" href="style.css" />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: white;
+      }
+
+      /* NAVBAR */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 50px;
+        background: #020617;
+      }
+
+      nav h1 {
+        color: #38bdf8;
+      }
+
+      nav a {
+        color: white;
+        margin-left: 20px;
+        text-decoration: none;
+      }
+
+      /* HERO */
+      .hero {
+        text-align: center;
+        padding: 80px 20px;
+      }
+
+      .hero h2 {
+        font-size: 40px;
+      }
+
+      .hero p {
+        color: #94a3b8;
+      }
+
+      /* SECTIONS */
+      .section {
+        padding: 60px 40px;
+      }
+
+      .section h2 {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      /* GRID */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      /* CARD */
+      .card {
+        background: #1e293b;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .card h3 {
+        color: #38bdf8;
+      }
+
+      /* CONTACT */
+      .contact {
+        text-align: center;
+      }
+
+      .contact a {
+        display: inline-block;
+        margin: 10px;
+        padding: 12px 20px;
+        background: #38bdf8;
+        color: black;
+        border-radius: 5px;
+        text-decoration: none;
+      }
+
+      /* FOOTER */
+      footer {
+        text-align: center;
+        padding: 20px;
+        background: #020617;
+      }
+    </style>
   </head>
 
   <body>
-    <header>
-      <h1>KandoTech Solutions</h1>
-      <p>WE FIX. WE BUILD. WE CREATE.</p>
-    </header>
-
+    <!-- NAVBAR -->
     <nav>
-      <a href="#">Home</a>
-      <a href="#">Services</a>
-      <a href="#">Contact</a>
+      <h1>KandoTech</h1>
+      <div>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </div>
     </nav>
 
+    <!-- HERO -->
     <section class="hero">
-      <h2>Welcome to KandoTech</h2>
-      <p>Your trusted tech repair & digital solutions in Malawi.</p>
+      <h2>WE FIX. WE BUILD. WE CREATE.</h2>
+      <p>Professional Tech Solutions in Malawi</p>
     </section>
 
-    <section class="services">
-      <h2>Our Services</h2>
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <h2>OUR SERVICES</h2>
 
-      <div class="service-container">
+      <div class="grid">
         <div class="card">
           <h3>📱 Phone Repair</h3>
-          <p>Screen replacement, unlocking, flashing, battery repair.</p>
+          <p>
+            Flashing, FRP bypass, unlocking, rooting, virus removal, boot repair, data recovery,
+            optimization, IMEI repair and more.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>🔧 Phone Hardware</h3>
+          <p>
+            Screen replacement, battery, charging port, motherboard repair, camera, speaker, water
+            damage repair.
+          </p>
         </div>
 
         <div class="card">
           <h3>💻 Computer Repair</h3>
-          <p>Windows install, virus removal, upgrades, troubleshooting.</p>
+          <p>
+            Windows installation, virus removal, driver install, hardware repair, upgrades,
+            troubleshooting.
+          </p>
         </div>
 
         <div class="card">
-          <h3>🔌 Home Appliances</h3>
-          <p>Electrical repairs for home devices.</p>
+          <h3>🏠 Home Appliances</h3>
+          <p>
+            Kettle, iron, cooker, water heater, wiring, TV repair, electrical faults and
+            installation.
+          </p>
         </div>
 
         <div class="card">
-          <h3>🌐 Web Development</h3>
-          <p>Websites, systems, hosting solutions.</p>
+          <h3>📱 Social Media Services</h3>
+          <p>
+            Account setup, business pages, ads, content creation, branding, engagement management.
+          </p>
         </div>
 
         <div class="card">
           <h3>🎨 Graphic Design</h3>
-          <p>Logos, posters, branding design.</p>
+          <p>
+            Logos, posters, flyers, business cards, branding kits, thumbnails, editing, animation.
+          </p>
         </div>
 
         <div class="card">
-          <h3>📡 Networking</h3>
-          <p>Wi-Fi setup, CCTV installation, IT support.</p>
+          <h3>🌐 Web & Software</h3>
+          <p>Website development, apps, databases, hosting setup, SEO, full-stack systems.</p>
+        </div>
+
+        <div class="card">
+          <h3>🌐 Networking</h3>
+          <p>WiFi setup, LAN/WAN, CCTV, servers, cloud, VPN, backups, network security.</p>
+        </div>
+
+        <div class="card">
+          <h3>💼 Digital Services</h3>
+          <p>Email setup, CV creation, printing, cloud setup, file conversion, online services.</p>
+        </div>
+
+        <div class="card">
+          <h3>🎓 Training</h3>
+          <p>Phone repair training, web development, networking, cybersecurity, business skills.</p>
+        </div>
+
+        <div class="card">
+          <h3>🏢 Business Solutions</h3>
+          <p>POS systems, inventory, CRM, payment setup, automation, online store setup.</p>
+        </div>
+
+        <div class="card">
+          <h3>🚀 Advanced Tech</h3>
+          <p>Cybersecurity, AI basics, server setup, smart home, virtualization, automation.</p>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT + QUOTE SYSTEM -->
-    <section class="contact">
-      <h2>Request a Service</h2>
-      <p>Send us your request or contact us directly below.</p>
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <h2>Contact Us</h2>
 
-      <form class="form">
-        <input type="text" id="name" placeholder="Your Name" required />
+      <a href="tel:+265882015682">📞 Call 1: 0882015682</a>
+      <a href="tel:+265991230780">📞 Call 2: 0991230780</a>
 
-        <input type="tel" id="phone" placeholder="Your Phone Number" required />
-
-        <select id="service" required>
-          <option value="">Select Service</option>
-          <option>Phone Repair</option>
-          <option>Computer Repair</option>
-          <option>Home Appliances</option>
-          <option>Web Development</option>
-          <option>Graphic Design</option>
-          <option>Networking</option>
-        </select>
-
-        <textarea id="message" placeholder="Describe your problem" required></textarea>
-
-        <button type="button" onclick="sendToWhatsApp()">📩 Send Request on WhatsApp</button>
-      </form>
-
-      <hr style="margin: 30px 0" />
-
-      <h3>📞 Direct Contacts</h3>
-
-      <div class="contact-buttons">
-        <a href="tel:265882015682" class="call">📞 Call 1</a>
-        <a href="https://wa.me/265882015682" target="_blank" class="whatsapp">💬 WhatsApp 1</a>
-
-        <a href="tel:265991230780" class="call">📞 Call 2</a>
-        <a href="https://wa.me/265991230780" target="_blank" class="whatsapp">💬 WhatsApp 2</a>
-      </div>
+      <a href="https://wa.me/265882015682">💬 WhatsApp 1</a>
+      <a href="https://wa.me/265991230780">💬 WhatsApp 2</a>
     </section>
 
+    <!-- FOOTER -->
     <footer>
-      <p>© 2026 KandoTech Solutions</p>
-      <p>📞 08820 156 82 | 0991 230 780</p>
+      <p>© 2026 KandoTech Solutions | Built by Chikondi</p>
     </footer>
-
-    <script src="script.js"></script>
   </body>
 </html>
