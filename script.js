@@ -1,313 +1,364 @@
-/* ═══════════════════════════════════════════
-   KandoTech Solutions — script.js
-   ═══════════════════════════════════════════ */
-
 'use strict';
 
-/* ─────────────────────────────────
-   1. LOADER
-───────────────────────────────── */
-(function initLoader() {
+// ========== LOADER ==========
+(function () {
   const loader = document.getElementById('loader');
-  const fill = document.getElementById('loaderFill');
-  const text = document.getElementById('loaderText');
-  const messages = ['Initializing…', 'Loading services…', 'Almost ready…', 'Welcome.'];
+  const progressBar = document.getElementById('loaderProgressBar');
+  const loaderText = document.getElementById('loaderText');
   let progress = 0;
-  let msgIndex = 0;
 
   const interval = setInterval(() => {
-    progress += Math.random() * 18 + 6;
-    if (progress >= 100) progress = 100;
-
-    fill.style.width = progress + '%';
-
-    const step = Math.floor((progress / 100) * messages.length);
-    if (step !== msgIndex && step < messages.length) {
-      msgIndex = step;
-      text.textContent = messages[msgIndex];
-    }
-
+    progress += Math.random() * 15;
     if (progress >= 100) {
+      progress = 100;
       clearInterval(interval);
       setTimeout(() => {
-        loader.classList.add('done');
-        document.body.classList.add('loaded');
-        triggerHeroAnimations();
-      }, 300);
+        loader.classList.add('hide');
+        document.body.style.overflow = '';
+      }, 500);
     }
-  }, 80);
+    progressBar.style.width = Math.min(progress, 100) + '%';
+    if (progress < 30) loaderText.textContent = 'Loading assets...';
+    else if (progress < 70) loaderText.textContent = 'Preparing experience...';
+    else loaderText.textContent = 'Almost ready...';
+  }, 120);
+
+  document.body.style.overflow = 'hidden';
 })();
 
-/* ─────────────────────────────────
-   2. HERO CANVAS — particle field
-───────────────────────────────── */
-(function initCanvas() {
-  const canvas = document.getElementById('heroCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  let W, H, particles;
-
-  function resize() {
-    W = canvas.width = canvas.offsetWidth;
-    H = canvas.height = canvas.offsetHeight;
-    buildParticles();
-  }
-
-  function buildParticles() {
-    const count = Math.floor((W * H) / 12000);
-    particles = Array.from({ length: count }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 1.5 + 0.5,
-      a: Math.random() * 0.6 + 0.1,
-    }));
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    particles.forEach((p) => {
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0) p.x = W;
-      if (p.x > W) p.x = 0;
-      if (p.y < 0) p.y = H;
-      if (p.y > H) p.y = 0;
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(0,255,135,${p.a})`;
-      ctx.fill();
-    });
-
-    // Draw lines between close particles
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(0,255,135,${0.06 * (1 - dist / 120)})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-
-    requestAnimationFrame(draw);
-  }
-
-  window.addEventListener('resize', resize);
-  resize();
-  draw();
-})();
-
-/* ─────────────────────────────────
-   3. HERO REVEAL ON LOAD
-───────────────────────────────── */
-function triggerHeroAnimations() {
-  document.querySelectorAll('.hero .reveal-item').forEach((el) => {
-    const delay = el.style.getPropertyValue('--d') || '0ms';
-    setTimeout(() => el.classList.add('visible'), parseInt(delay) + 100);
-  });
-
-  // Animate counters
-  document.querySelectorAll('[data-count]').forEach((el) => {
-    const target = parseInt(el.dataset.count);
-    let current = 0;
-    const step = Math.ceil(target / 40);
-    const timer = setInterval(() => {
-      current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
-      el.textContent = current + (el.dataset.count === '100' ? '' : '');
-    }, 30);
-  });
-}
-
-/* ─────────────────────────────────
-   4. CUSTOM CURSOR
-───────────────────────────────── */
-(function initCursor() {
+// ========== CUSTOM CURSOR ==========
+(function () {
   const cursor = document.getElementById('cursor');
-  const cursorDot = document.getElementById('cursorDot');
-  if (!cursor || !cursorDot) return;
+  const follower = document.getElementById('cursorFollower');
+  if (!cursor || !follower) return;
 
-  let cx = -100,
-    cy = -100; // current (lagged)
-  let tx = -100,
-    ty = -100; // target (instant)
+  let mouseX = 0,
+    mouseY = 0;
+  let followerX = 0,
+    followerY = 0;
 
   document.addEventListener('mousemove', (e) => {
-    tx = e.clientX;
-    ty = e.clientY;
-    cursorDot.style.left = tx + 'px';
-    cursorDot.style.top = ty + 'px';
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
   });
 
-  function animateCursor() {
-    cx += (tx - cx) * 0.12;
-    cy += (ty - cy) * 0.12;
-    cursor.style.left = cx + 'px';
-    cursor.style.top = cy + 'px';
-    requestAnimationFrame(animateCursor);
+  function animate() {
+    followerX += (mouseX - followerX) * 0.15;
+    followerY += (mouseY - followerY) * 0.15;
+    follower.style.transform = `translate(${followerX - 16}px, ${followerY - 16}px)`;
+    requestAnimationFrame(animate);
   }
-  animateCursor();
+  animate();
 
-  const hoverEls = document.querySelectorAll('a, button, .service-card, .contact-card, .pillar');
-  hoverEls.forEach((el) => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-  });
-})();
-
-/* ─────────────────────────────────
-   5. NAVBAR — scroll behavior
-───────────────────────────────── */
-(function initNavbar() {
-  const nav = document.getElementById('navbar');
-  let lastScroll = 0;
-
-  window.addEventListener(
-    'scroll',
-    () => {
-      const y = window.scrollY;
-
-      // Add scrolled class
-      nav.classList.toggle('scrolled', y > 60);
-
-      // Hide/show on scroll direction (optional feel)
-      if (y > 200) {
-        if (y > lastScroll + 4) {
-          nav.style.transform = 'translateY(-100%)';
-        } else if (y < lastScroll - 4) {
-          nav.style.transform = 'translateY(0)';
-        }
-      } else {
-        nav.style.transform = 'translateY(0)';
-      }
-      lastScroll = y;
-    },
-    { passive: true }
-  );
-})();
-
-/* ─────────────────────────────────
-   6. MOBILE MENU
-───────────────────────────────── */
-(function initMobileMenu() {
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobLinks = mobileMenu.querySelectorAll('.mob-link');
-
-  function toggle() {
-    const isOpen = mobileMenu.classList.toggle('open');
-    hamburger.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  }
-
-  hamburger.addEventListener('click', toggle);
-
-  mobLinks.forEach((link) => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.classList.remove('open');
-      document.body.style.overflow = '';
+  const links = document.querySelectorAll('a, button, .service-card');
+  links.forEach((link) => {
+    link.addEventListener('mouseenter', () => {
+      follower.style.width = '48px';
+      follower.style.height = '48px';
+      follower.style.borderColor = 'var(--accent)';
+      follower.style.background = 'rgba(37, 99, 235, 0.1)';
+    });
+    link.addEventListener('mouseleave', () => {
+      follower.style.width = '32px';
+      follower.style.height = '32px';
+      follower.style.background = 'transparent';
     });
   });
 })();
 
-/* ─────────────────────────────────
-   7. SCROLL REVEAL — IntersectionObserver
-───────────────────────────────── */
-(function initReveal() {
+// ========== NAVBAR SCROLL EFFECT ==========
+(function () {
+  const navbar = document.getElementById('navbar');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+
+    if (currentScroll > 100 && currentScroll > lastScroll) {
+      navbar.style.transform = 'translateY(-100%)';
+    } else {
+      navbar.style.transform = 'translateY(0)';
+    }
+    lastScroll = currentScroll;
+  });
+})();
+
+// ========== MOBILE MENU ==========
+(function () {
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  function toggleMenu() {
+    mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+
+  document.querySelectorAll('.mob-link').forEach((link) => {
+    link.addEventListener('click', toggleMenu);
+  });
+})();
+
+// ========== SCROLL REVEAL ==========
+(function () {
+  const revealElements = document.querySelectorAll('.reveal-item, .reveal-up');
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          const delay = entry.target.getAttribute('data-delay');
+          if (delay) {
+            setTimeout(() => {
+              entry.target.classList.add('visible');
+            }, parseInt(delay));
+          } else {
+            entry.target.classList.add('visible');
+          }
           observer.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+    { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
   );
 
-  document.querySelectorAll('.reveal-up').forEach((el) => observer.observe(el));
+  revealElements.forEach((el) => observer.observe(el));
+
+  // Trigger initial hero reveal
+  setTimeout(() => {
+    document.querySelectorAll('.hero .reveal-item').forEach((el) => {
+      const delay = el.getAttribute('data-delay');
+      setTimeout(() => el.classList.add('visible'), delay || 0);
+    });
+  }, 200);
 })();
 
-/* ─────────────────────────────────
-   8. ACTIVE NAV LINK — scroll spy
-───────────────────────────────── */
-(function initScrollSpy() {
-  const sections = document.querySelectorAll('section[id]');
-  const links = document.querySelectorAll('.nav-link');
+// ========== STAT COUNTERS ==========
+(function () {
+  const counters = document.querySelectorAll('.stat-number[data-count]');
 
-  const observer = new IntersectionObserver(
+  const counterObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          links.forEach((link) => link.classList.remove('active'));
-          const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-          if (active) active.classList.add('active');
+          const counter = entry.target;
+          const target = parseInt(counter.getAttribute('data-count'));
+          let current = 0;
+          const increment = target / 50;
+          const updateCounter = () => {
+            current += increment;
+            if (current < target) {
+              counter.textContent = Math.floor(current);
+              requestAnimationFrame(updateCounter);
+            } else {
+              counter.textContent = target;
+            }
+          };
+          updateCounter();
+          counterObserver.unobserve(counter);
         }
       });
     },
-    { threshold: 0.4 }
+    { threshold: 0.5 }
   );
 
-  sections.forEach((s) => observer.observe(s));
+  counters.forEach((counter) => counterObserver.observe(counter));
 })();
 
-/* ─────────────────────────────────
-   9. SERVICE CARDS — tilt effect
-───────────────────────────────── */
-(function initTilt() {
-  const cards = document.querySelectorAll('.service-card, .contact-card');
+// ========== ACTIVE NAV LINK (SCROLL SPY) ==========
+(function () {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-  cards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
-      const y = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
-      card.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${-y}deg) translateY(-3px)`;
+  window.addEventListener('scroll', () => {
+    let current = '';
+    const scrollPos = window.scrollY + 150;
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionBottom = sectionTop + section.offsetHeight;
+      if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+        current = section.getAttribute('id');
+      }
     });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
+
+    navLinks.forEach((link) => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href');
+      if (href === `#${current}` || (current === '' && href === '#')) {
+        link.classList.add('active');
+      }
     });
   });
 })();
 
-/* ─────────────────────────────────
-   10. SMOOTH SCROLL for anchors
-───────────────────────────────── */
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener('click', (e) => {
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const offset = 80;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+// ========== SMOOTH SCROLL ==========
+(function () {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        const offsetTop = target.offsetTop - 80;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth',
+        });
+      }
+    });
+  });
+})();
+
+// ========== HERO CANVAS PARTICLES ==========
+(function () {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  let particles = [];
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  }
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.size = Math.random() * 2 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.3;
     }
-  });
-});
 
-/* ─────────────────────────────────
-   11. FOOTER year (future-proof)
-───────────────────────────────── */
-(function setYear() {
-  const els = document.querySelectorAll('.footer-year');
-  const y = new Date().getFullYear();
-  els.forEach((el) => {
-    el.textContent = y;
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      if (this.x < 0) this.x = width;
+      if (this.x > width) this.x = 0;
+      if (this.y < 0) this.y = height;
+      if (this.y > height) this.y = 0;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(37, 99, 235, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  function init() {
+    resize();
+    particles = [];
+    for (let i = 0; i < 100; i++) {
+      particles.push(new Particle());
+    }
+    animate();
+  }
+
+  function animate() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, width, height);
+    particles.forEach((p) => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+    init();
+  });
+
+  init();
+})();
+
+// ========== SERVICE CARD HOVER EFFECT ==========
+(function () {
+  const cards = document.querySelectorAll('.service-card');
+  cards.forEach((card) => {
+    card.addEventListener('mouseenter', function (e) {
+      this.style.transform = `translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', function () {
+      this.style.transform = '';
+    });
   });
 })();
+
+// ========== TICKER INFINITE LOOP ==========
+(function () {
+  const ticker = document.getElementById('tickerTrack');
+  if (ticker) {
+    const content = ticker.innerHTML;
+    ticker.innerHTML = content + content;
+  }
+})();
+
+// ========== ADD RIPPLE EFFECT TO BUTTONS ==========
+(function () {
+  const buttons = document.querySelectorAll('.btn-primary, .btn-ghost, .contact-card');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', function (e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        background: rgba(37, 99, 235, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s ease-out;
+        pointer-events: none;
+      `;
+
+      this.style.position = 'relative';
+      this.style.overflow = 'hidden';
+      this.appendChild(ripple);
+
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+})();
+
+// Add ripple keyframe if not exists
+if (!document.querySelector('#ripple-style')) {
+  const style = document.createElement('style');
+  style.id = 'ripple-style';
+  style.textContent = `
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+console.log('KandoTech — Fully loaded and responsive!');
