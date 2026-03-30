@@ -3,7 +3,7 @@
 // ========== LOADER ==========
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
-  setTimeout(() => loader.classList.add('hide'), 1500);
+  setTimeout(() => loader.classList.add('hide'), 1200);
 });
 
 // ========== THEME TOGGLE ==========
@@ -29,7 +29,10 @@ window.addEventListener('load', () => {
   const floatingHelp = document.getElementById('floatingHelp');
   const helpButton = document.getElementById('helpButton');
   if (helpButton) {
-    helpButton.addEventListener('click', () => floatingHelp.classList.toggle('open'));
+    helpButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      floatingHelp.classList.toggle('open');
+    });
     document.addEventListener('click', (e) => {
       if (!floatingHelp.contains(e.target)) floatingHelp.classList.remove('open');
     });
@@ -44,9 +47,11 @@ window.addEventListener('load', () => {
     const currentScroll = window.pageYOffset;
     if (currentScroll > 50) navbar.classList.add('scrolled');
     else navbar.classList.remove('scrolled');
-    if (currentScroll > 100 && currentScroll > lastScroll)
+    if (currentScroll > 100 && currentScroll > lastScroll) {
       navbar.style.transform = 'translateY(-100%)';
-    else navbar.style.transform = 'translateY(0)';
+    } else {
+      navbar.style.transform = 'translateY(0)';
+    }
     lastScroll = currentScroll;
   });
 })();
@@ -61,29 +66,31 @@ window.addEventListener('load', () => {
     document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
   }
   if (hamburger) hamburger.addEventListener('click', toggleMenu);
-  document
-    .querySelectorAll('.mob-link')
-    .forEach((link) => link.addEventListener('click', toggleMenu));
+  document.querySelectorAll('.mob-link').forEach((link) => {
+    link.addEventListener('click', toggleMenu);
+  });
 })();
 
 // ========== ACTIVE NAV LINK ==========
 (function () {
-  const sections = document.querySelectorAll('section[id], div[id="home"]');
+  const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-link');
   window.addEventListener('scroll', () => {
     let current = '';
-    const scrollPos = window.scrollY + 150;
+    const scrollPos = window.scrollY + 120;
     sections.forEach((section) => {
       const sectionTop = section.offsetTop;
       const sectionBottom = sectionTop + section.offsetHeight;
-      if (scrollPos >= sectionTop && scrollPos < sectionBottom)
+      if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
         current = section.getAttribute('id');
+      }
     });
     navLinks.forEach((link) => {
       link.classList.remove('active');
       const href = link.getAttribute('href');
-      if (href === `#${current}` || (current === '' && href === '#home'))
+      if (href === `#${current}` || (current === '' && href === '#home')) {
         link.classList.add('active');
+      }
     });
   });
 })();
@@ -96,7 +103,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     const target = document.querySelector(targetId);
     if (target) {
       e.preventDefault();
-      const offsetTop = target.offsetTop - 80;
+      const offsetTop = target.offsetTop - 75;
       window.scrollTo({ top: offsetTop, behavior: 'smooth' });
       const mobileMenu = document.getElementById('mobileMenu');
       const hamburger = document.getElementById('hamburger');
@@ -119,7 +126,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
           const counter = entry.target;
           const target = parseInt(counter.getAttribute('data-count'));
           let current = 0;
-          const increment = target / 50;
+          const increment = target / 40;
           const updateCounter = () => {
             current += increment;
             if (current < target) {
@@ -134,15 +141,15 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         }
       });
     },
-    { threshold: 0.3, rootMargin: '0px 0px -50px 0px' }
+    { threshold: 0.4 }
   );
   counters.forEach((counter) => observer.observe(counter));
   setTimeout(() => {
     counters.forEach((counter) => {
       const rect = counter.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) observer.observe(counter);
+      if (rect.top < window.innerHeight - 80) observer.observe(counter);
     });
-  }, 500);
+  }, 300);
 })();
 
 // ========== SERVICE MODAL DATA ==========
@@ -150,191 +157,305 @@ const serviceDetails = {
   phone: {
     icon: '📱',
     title: 'Phone Repair',
-    description: 'Expert mobile phone repair for all major brands.',
+    description: 'Expert mobile phone repair for all major brands with fast turnaround.',
     features: [
-      'Screen replacement',
+      'Screen replacement (OLED/LCD)',
       'Battery replacement',
       'Water damage repair',
-      'Software issues',
-      'FRP bypass',
+      'Software issues & flashing',
+      'FRP bypass & unlocking',
       'Charging port repair',
+      'Camera & speaker repair',
     ],
   },
   computer: {
     icon: '💻',
     title: 'Computer Repair',
-    description: 'Comprehensive computer repair and maintenance.',
+    description: 'Comprehensive computer repair and maintenance for desktops and laptops.',
     features: [
       'Windows/macOS installation',
-      'Virus removal',
-      'Hardware upgrades',
+      'Virus & malware removal',
+      'Hardware upgrades (RAM, SSD)',
+      'Motherboard repair',
       'Data recovery',
       'Driver installation',
+      'Screen & keyboard replacement',
     ],
   },
   appliances: {
     icon: '⚡',
     title: 'Home Appliances',
-    description: 'Expert repair for home electronics.',
+    description: 'Expert repair for all home electronics and appliances.',
     features: [
-      'TV repair',
+      'TV repair (all brands)',
       'Kettle & iron repair',
-      'Cooker repair',
+      'Cooker & oven repair',
       'Water heater service',
       'Electrical wiring',
+      'Microwave repair',
+      'Fridge & freezer repair',
     ],
   },
   hardware: {
     icon: '🔧',
     title: 'Hardware Fix',
-    description: 'Professional hardware repair and upgrades.',
+    description: 'Professional hardware repair and component-level fixes.',
     features: [
       'Component replacement',
       'System upgrades',
       'Cooling system repair',
       'Power supply fix',
+      'Motherboard diagnostics',
+      'Chip-level repair',
     ],
   },
   'custom-software': {
     icon: '🛠️',
     title: 'Custom Software',
-    description: 'Tailored software solutions for your business.',
+    description: 'Tailored software solutions built specifically for your business needs.',
     features: [
       'Desktop applications',
       'Business management systems',
       'ERP solutions',
       'Automation tools',
+      'Inventory systems',
+      'Reporting dashboards',
     ],
   },
   'mobile-apps': {
     icon: '📱',
     title: 'Mobile Apps',
-    description: 'Native and cross-platform mobile development.',
+    description: 'Native and cross-platform mobile app development.',
     features: [
-      'iOS development',
-      'Android development',
-      'Flutter apps',
-      'React Native',
+      'iOS development (Swift)',
+      'Android development (Kotlin/Java)',
+      'Flutter cross-platform',
+      'React Native apps',
       'App store deployment',
+      'UI/UX design',
     ],
   },
   api: {
     icon: '🔌',
     title: 'API & Backend',
-    description: 'Robust backend systems and APIs.',
-    features: ['RESTful APIs', 'Microservices', 'Database integration', 'Authentication systems'],
+    description: 'Robust backend systems and API development.',
+    features: [
+      'RESTful APIs',
+      'GraphQL APIs',
+      'Microservices architecture',
+      'Database integration',
+      'Authentication systems',
+      'Cloud deployment',
+    ],
   },
   database: {
     icon: '🗄️',
     title: 'Database Systems',
-    description: 'Database design, setup, and optimization.',
-    features: ['MySQL/PostgreSQL', 'MongoDB', 'Data migration', 'Performance tuning'],
+    description: 'Database design, setup, and optimization services.',
+    features: [
+      'MySQL/PostgreSQL',
+      'MongoDB/NoSQL',
+      'Database migration',
+      'Performance tuning',
+      'Backup & recovery',
+      'Data warehousing',
+    ],
   },
   web: {
     icon: '🌐',
     title: 'Web Development',
-    description: 'Modern, responsive websites.',
+    description: 'Modern, responsive websites that drive results.',
     features: [
-      'Custom websites',
+      'Custom website design',
       'E-commerce stores',
-      'CMS integration',
+      'CMS integration (WordPress)',
       'SEO optimization',
       'Hosting setup',
+      'Website maintenance',
     ],
   },
   ecommerce: {
     icon: '🛒',
     title: 'E-commerce',
-    description: 'Complete online store solutions.',
+    description: 'Complete online store solutions to sell your products.',
     features: [
-      'Shopify/WooCommerce',
-      'Payment integration',
+      'Shopify/WooCommerce setup',
+      'Payment gateway integration',
       'Inventory management',
       'Order processing',
+      'Product catalog setup',
+      'Mobile-responsive stores',
     ],
   },
   cloud: {
     icon: '☁️',
     title: 'Cloud & Email',
-    description: 'Cloud services and email setup.',
-    features: ['Google Workspace', 'Microsoft 365', 'Cloud migration', 'Email hosting'],
+    description: 'Cloud services and professional email setup.',
+    features: [
+      'Google Workspace setup',
+      'Microsoft 365 configuration',
+      'Cloud migration',
+      'Email hosting',
+      'Data backup',
+      'Collaboration tools',
+    ],
   },
   marketing: {
     icon: '📊',
     title: 'Digital Marketing',
-    description: 'Grow your online presence.',
-    features: ['Social media management', 'SEO optimization', 'Google Ads', 'Content creation'],
+    description: 'Grow your online presence and reach more customers.',
+    features: [
+      'Social media management',
+      'SEO optimization',
+      'Google Ads campaigns',
+      'Content creation',
+      'Email marketing',
+      'Analytics & reporting',
+    ],
   },
   networking: {
     icon: '📡',
     title: 'Networking',
-    description: 'Network setup and security.',
-    features: ['WiFi installation', 'CCTV setup', 'Server configuration', 'VPN setup'],
+    description: 'Professional network setup and security solutions.',
+    features: [
+      'WiFi installation',
+      'CCTV camera setup',
+      'Server configuration',
+      'VPN setup',
+      'Network security',
+      'Cloud services',
+      'Data backup solutions',
+    ],
   },
   cybersecurity: {
     icon: '🔒',
     title: 'Cybersecurity',
-    description: 'Protect your digital assets.',
-    features: ['Security audits', 'Firewall setup', 'Data protection', 'Threat monitoring'],
+    description: 'Protect your digital assets from threats.',
+    features: [
+      'Security audits',
+      'Firewall setup',
+      'Data protection',
+      'Threat monitoring',
+      'Vulnerability assessment',
+      'Employee training',
+    ],
   },
   itsupport: {
     icon: '🖥️',
     title: 'IT Support',
-    description: 'Reliable IT support services.',
-    features: ['Help desk', 'Remote support', 'System maintenance', 'Troubleshooting'],
+    description: 'Reliable IT support services for businesses.',
+    features: [
+      'Help desk support',
+      'Remote assistance',
+      'System maintenance',
+      'Troubleshooting',
+      'Hardware setup',
+      'Software installation',
+    ],
   },
   businessit: {
     icon: '🏢',
     title: 'Business IT',
-    description: 'Business technology solutions.',
-    features: ['POS systems', 'CRM implementation', 'Process automation', 'Inventory systems'],
+    description: 'Technology solutions to grow your business.',
+    features: [
+      'POS systems',
+      'CRM implementation',
+      'Process automation',
+      'Inventory systems',
+      'Business analytics',
+      'IT consulting',
+    ],
   },
   graphic: {
     icon: '🎨',
     title: 'Graphic Design',
-    description: 'Creative design solutions.',
-    features: ['Logo design', 'Brand identity', 'Posters & flyers', 'Social media graphics'],
+    description: 'Creative design solutions for your brand.',
+    features: [
+      'Logo design',
+      'Brand identity',
+      'Posters & flyers',
+      'Social media graphics',
+      'Business cards',
+      'Packaging design',
+    ],
   },
   printing: {
     icon: '🖨️',
     title: 'Printing',
-    description: 'Professional printing services.',
-    features: ['Banner printing', 'Business cards', 'Flyers & posters', 'Event cards'],
+    description: 'Professional printing services for all needs.',
+    features: [
+      'Banner printing',
+      'Business cards',
+      'Flyers & posters',
+      'Event cards',
+      'Sticker printing',
+      'Document printing',
+    ],
   },
   motion: {
     icon: '🎬',
     title: 'Motion Graphics',
-    description: 'Animated visual content.',
-    features: ['Logo animation', 'Intro videos', 'Explainer videos', 'Social media reels'],
+    description: 'Animated visual content that engages.',
+    features: [
+      'Logo animation',
+      'Intro videos',
+      'Explainer videos',
+      'Social media reels',
+      'Motion typography',
+      '2D/3D animation',
+    ],
   },
   branding: {
     icon: '👕',
     title: 'Branding & Merch',
     description: 'Custom branded merchandise.',
-    features: ['T-shirt design', 'Uniforms', 'Mugs & caps', 'Corporate gifts'],
+    features: [
+      'T-shirt design',
+      'Uniforms & caps',
+      'Mugs & merchandise',
+      'Corporate gifts',
+      'Branded stationery',
+      'Promotional items',
+    ],
   },
   training: {
     icon: '🎓',
     title: 'Tech Training',
-    description: 'Hands-on tech courses.',
+    description: 'Hands-on tech courses for all skill levels.',
     features: [
       'Phone repair course',
       'Web development bootcamp',
       'Networking fundamentals',
       'Cybersecurity basics',
+      'Graphic design training',
+      'Certificate upon completion',
     ],
   },
   cv: {
     icon: '📄',
     title: 'CV & Resume',
-    description: 'Professional CV services.',
-    features: ['CV writing', 'Resume formatting', 'Cover letters', 'LinkedIn profile sync'],
+    description: 'Professional CV services to boost your career.',
+    features: [
+      'CV writing',
+      'Resume formatting',
+      'Cover letters',
+      'LinkedIn profile sync',
+      'Portfolio creation',
+      'Job application prep',
+    ],
   },
   profile: {
     icon: '👔',
     title: 'Profile Optimization',
     description: 'Enhance your professional profiles.',
-    features: ['LinkedIn optimization', 'Fiverr profile', 'Upwork profile', 'Portfolio setup'],
+    features: [
+      'LinkedIn optimization',
+      'Fiverr profile',
+      'Upwork profile',
+      'Portfolio setup',
+      'Personal branding',
+      'Profile content writing',
+    ],
   },
   career: {
     icon: '🎯',
@@ -345,6 +466,8 @@ const serviceDetails = {
       'Career path planning',
       'Certification guidance',
       'Skill assessment',
+      'Salary negotiation',
+      'Industry insights',
     ],
   },
 };
@@ -390,9 +513,9 @@ const serviceDetails = {
 (function () {
   const particlesContainer = document.querySelector('.hero-bg-particles');
   if (!particlesContainer) return;
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 60; i++) {
     const particle = document.createElement('div');
-    particle.style.cssText = `position:absolute; width:2px; height:2px; background:var(--accent); border-radius:50%; opacity:${Math.random() * 0.3}; left:${Math.random() * 100}%; top:${Math.random() * 100}%; animation:float ${5 + Math.random() * 10}s ease-in-out infinite`;
+    particle.style.cssText = `position:absolute; width:${Math.random() * 3 + 1}px; height:${Math.random() * 3 + 1}px; background:var(--accent); border-radius:50%; opacity:${Math.random() * 0.25}; left:${Math.random() * 100}%; top:${Math.random() * 100}%; animation:float ${Math.random() * 12 + 5}s ease-in-out infinite; animation-delay:${Math.random() * 5}s`;
     particlesContainer.appendChild(particle);
   }
 })();
@@ -401,8 +524,33 @@ if (!document.querySelector('#float-style')) {
   const style = document.createElement('style');
   style.id = 'float-style';
   style.textContent =
-    '@keyframes float { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-20px) translateX(10px); } }';
+    '@keyframes float { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-25px) translateX(12px); } }';
   document.head.appendChild(style);
 }
 
-console.log('KandoTech — Fully loaded with categorized services!');
+// ========== REVEAL ON SCROLL ==========
+(function () {
+  const revealElements = document.querySelectorAll(
+    '.service-card, .category-block, .about-content, .about-stats, .contact-card, .section-header'
+  );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+  );
+  revealElements.forEach((el) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity 0.35s ease-out, transform 0.35s ease-out';
+    observer.observe(el);
+  });
+})();
+
+console.log('KandoTech — Fully optimized with smooth transitions!');
