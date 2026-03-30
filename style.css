@@ -110,15 +110,15 @@ body {
   transform: rotate(0);
 }
 
-/* ========== FLOATING ACTION BUTTON ========== */
-.fab-container {
+/* ========== FLOATING HELP BUTTON (NEW - BELOW) ========== */
+.floating-help {
   position: fixed;
   bottom: 100px;
   right: 24px;
   z-index: 100;
 }
 
-.fab-main {
+.help-button {
   width: 56px;
   height: 56px;
   border-radius: 28px;
@@ -135,38 +135,38 @@ body {
   z-index: 2;
 }
 
-.fab-main:hover {
+.help-button:hover {
   transform: scale(1.05);
   background: var(--accent-dark);
 }
 
-.fab-main i {
+.help-button i {
   font-size: 24px;
   position: absolute;
   transition: var(--transition);
 }
 
-.fab-main .fa-bolt {
+.help-button .fa-headset {
   opacity: 1;
   transform: rotate(0);
 }
 
-.fab-main .fa-times {
+.help-button .fa-times {
   opacity: 0;
   transform: rotate(90deg);
 }
 
-.fab-container.open .fab-main .fa-bolt {
+.floating-help.open .help-button .fa-headset {
   opacity: 0;
   transform: rotate(-90deg);
 }
 
-.fab-container.open .fab-main .fa-times {
+.floating-help.open .help-button .fa-times {
   opacity: 1;
   transform: rotate(0);
 }
 
-.fab-options {
+.help-options {
   position: absolute;
   bottom: 70px;
   right: 0;
@@ -179,55 +179,57 @@ body {
   transition: var(--transition);
 }
 
-.fab-container.open .fab-options {
+.floating-help.open .help-options {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-.fab-option {
-  width: 44px;
-  height: 44px;
-  border-radius: 22px;
+.help-option {
+  width: auto;
+  min-width: 140px;
   background: var(--card-bg);
   border: 1px solid var(--border);
-  color: var(--text-primary);
+  border-radius: 40px;
+  padding: 10px 18px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 12px;
   text-decoration: none;
   box-shadow: var(--shadow-md);
   transition: var(--transition);
-  position: relative;
 }
 
-.fab-option:hover {
-  transform: scale(1.1);
-  background: var(--accent);
-  color: white;
+.help-option:hover {
+  transform: translateX(-4px);
+  border-color: var(--accent);
 }
 
-.fab-option[data-tooltip]:before {
-  content: attr(data-tooltip);
-  position: absolute;
-  right: 55px;
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: var(--transition);
+.help-option i {
+  font-size: 20px;
 }
 
-.fab-option:hover:before {
-  opacity: 1;
-  visibility: visible;
+.help-option.whatsapp-help i {
+  color: #25d366;
 }
 
-/* ========== LOADER ========== */
+.help-option.call-help i {
+  color: var(--accent);
+}
+
+.help-option span {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.help-option small {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+/* ========== LOADER (KEPT AS IS) ========== */
 .loader {
   position: fixed;
   inset: 0;
@@ -282,7 +284,7 @@ body {
   }
 }
 
-/* ========== NAVBAR ========== */
+/* ========== NAVBAR (with scroll effect) ========== */
 nav {
   position: fixed;
   top: 0;
@@ -290,9 +292,14 @@ nav {
   right: 0;
   z-index: 1000;
   background: rgba(var(--bg-primary), 0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
   transition: var(--transition);
+}
+
+nav.scrolled {
+  backdrop-filter: blur(12px);
+  background: rgba(var(--bg-primary), 0.85);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid var(--border);
 }
 
 .nav-container {
@@ -457,7 +464,7 @@ nav {
   margin: 8px 0;
 }
 
-/* ========== HERO ========== */
+/* ========== HERO (with typography hierarchy) ========== */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -503,8 +510,9 @@ nav {
   color: var(--accent);
 }
 
+/* TIER 1: Hero typography hierarchy - increased h1 size, reduced subtitle opacity */
 .hero-title {
-  font-size: clamp(42px, 6vw, 70px);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 24px;
@@ -528,6 +536,7 @@ nav {
   color: var(--text-secondary);
   margin-bottom: 36px;
   max-width: 500px;
+  opacity: 0.75;
 }
 
 .hero-buttons {
@@ -681,7 +690,7 @@ nav {
   }
 }
 
-/* ========== SERVICES ========== */
+/* ========== SERVICES (with card hover lift) ========== */
 .services {
   padding: 100px 0;
   background: var(--bg-primary);
@@ -734,17 +743,20 @@ nav {
   gap: 28px;
 }
 
+/* TIER 1: Service card hover lift - translateY + increased shadow */
 .service-card {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 32px;
-  transition: var(--transition);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   cursor: pointer;
 }
 
 .service-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
   border-color: var(--accent);
 }
@@ -993,7 +1005,7 @@ nav {
   margin-top: 8px;
 }
 
-/* ========== CONTACT ========== */
+/* ========== CONTACT (with response badge) ========== */
 .contact {
   padding: 100px 0;
   background: var(--bg-primary);
@@ -1044,6 +1056,18 @@ nav {
 .contact-sub {
   font-size: 12px;
   color: var(--text-muted);
+}
+
+/* TIER 1: Response time badge */
+.response-badge {
+  display: inline-block;
+  background: var(--accent-light);
+  color: var(--accent);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 6px;
 }
 
 .whatsapp i {
@@ -1248,6 +1272,37 @@ footer {
   .modal-actions {
     flex-direction: column;
   }
+
+  /* Better mobile sizing */
+  .hero-title {
+    font-size: clamp(2.2rem, 7vw, 3rem);
+  }
+
+  .hero-desc {
+    font-size: 16px;
+  }
+
+  .service-card {
+    padding: 24px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+  }
+
+  .floating-help {
+    bottom: 90px;
+    right: 16px;
+  }
+
+  .help-option {
+    min-width: 130px;
+    padding: 8px 14px;
+  }
+
+  .help-option span {
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1266,6 +1321,22 @@ footer {
   }
 
   .service-card {
-    padding: 24px;
+    padding: 20px;
+  }
+
+  .card-icon {
+    font-size: 40px;
+  }
+
+  .service-card h3 {
+    font-size: 20px;
+  }
+
+  .contact-card {
+    padding: 20px;
+  }
+
+  .contact-card i {
+    font-size: 32px;
   }
 }

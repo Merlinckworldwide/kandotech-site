@@ -32,37 +32,33 @@
       <i class="fas fa-moon"></i>
     </button>
 
-    <!-- Floating Action Button -->
-    <div class="fab-container" id="fabContainer">
-      <button class="fab-main" id="fabMain">
-        <i class="fas fa-bolt"></i>
+    <!-- Floating Help Button (NEW - Below) -->
+    <div class="floating-help" id="floatingHelp">
+      <button class="help-button" id="helpButton">
+        <i class="fas fa-headset"></i>
         <i class="fas fa-times"></i>
       </button>
-      <div class="fab-options">
-        <a href="tel:+265882015682" class="fab-option" data-tooltip="Call Now">
-          <i class="fas fa-phone-alt"></i>
-        </a>
-        <a
-          href="https://wa.me/265882015682"
-          target="_blank"
-          class="fab-option"
-          data-tooltip="WhatsApp"
-        >
+      <div class="help-options">
+        <a href="https://wa.me/265882015682" target="_blank" class="help-option whatsapp-help">
           <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp</span>
+          <small>Reply <5min</small>
         </a>
-        <a href="#contact" class="fab-option" data-tooltip="Get Quote">
-          <i class="fas fa-envelope"></i>
+        <a href="tel:+265882015682" class="help-option call-help">
+          <i class="fas fa-phone-alt"></i>
+          <span>Call Now</span>
+          <small>24/7 Support</small>
         </a>
       </div>
     </div>
 
-    <!-- Loader -->
+    <!-- Loader (KEPT AS IS) -->
     <div class="loader" id="loader">
       <div class="loader-ring"></div>
       <div class="loader-text">KandoTech</div>
     </div>
 
-    <!-- Navbar -->
+    <!-- Navbar with logo -->
     <nav id="navbar">
       <div class="nav-container">
         <a href="#" class="nav-logo">
@@ -145,7 +141,7 @@
         <div class="hero-right">
           <div class="hero-card">
             <div class="card-header">
-              <span class="live-badge"><i class="fas fa-circle"></i> Live Support</span>
+              <span class="live-badge"><i class="fas fa-circle"></i> Quick Support</span>
             </div>
             <div class="card-content">
               <i class="fas fa-headset"></i>
@@ -172,7 +168,7 @@
       </div>
     </div>
 
-    <!-- Services Section with Modal Popups -->
+    <!-- Services Section -->
     <section class="services" id="services">
       <div class="container">
         <div class="section-header">
@@ -183,7 +179,6 @@
           </p>
         </div>
         <div class="services-grid" id="servicesGrid">
-          <!-- Service Cards - Each will trigger modal -->
           <div class="service-card" data-service="phone">
             <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
             <h3>Phone Repair</h3>
@@ -236,7 +231,7 @@
       </div>
     </section>
 
-    <!-- Service Modal (Hidden by default) -->
+    <!-- Service Modal -->
     <div class="modal" id="serviceModal">
       <div class="modal-content">
         <button class="modal-close">&times;</button>
@@ -316,7 +311,7 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section with Response Time Badge -->
     <section class="contact" id="contact">
       <div class="container">
         <div class="section-header">
@@ -338,7 +333,7 @@
             <div>
               <h3>WhatsApp</h3>
               <p>0882 015 682</p>
-              <span class="contact-sub">Fastest response • 24/7</span>
+              <span class="contact-sub response-badge">⚡ Typically replies in &lt;5 minutes</span>
             </div>
           </a>
           <a href="mailto:kandotech21@gmail.com" class="contact-card">

@@ -1,6 +1,6 @@
 'use strict';
 
-// ========== LOADER ==========
+// ========== LOADER (KEPT AS IS) ==========
 window.addEventListener('load', () => {
   const loader = document.getElementById('loader');
   setTimeout(() => {
@@ -29,24 +29,26 @@ window.addEventListener('load', () => {
   });
 })();
 
-// ========== FLOATING ACTION BUTTON ==========
+// ========== FLOATING HELP BUTTON (NEW) ==========
 (function () {
-  const fabContainer = document.getElementById('fabContainer');
-  const fabMain = document.getElementById('fabMain');
+  const floatingHelp = document.getElementById('floatingHelp');
+  const helpButton = document.getElementById('helpButton');
 
-  fabMain.addEventListener('click', () => {
-    fabContainer.classList.toggle('open');
-  });
+  if (helpButton) {
+    helpButton.addEventListener('click', () => {
+      floatingHelp.classList.toggle('open');
+    });
 
-  // Close when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!fabContainer.contains(e.target)) {
-      fabContainer.classList.remove('open');
-    }
-  });
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!floatingHelp.contains(e.target)) {
+        floatingHelp.classList.remove('open');
+      }
+    });
+  }
 })();
 
-// ========== NAVBAR SCROLL ==========
+// ========== NAVBAR SCROLL EFFECT (with blur + shadow) ==========
 (function () {
   const navbar = document.getElementById('navbar');
   let lastScroll = 0;
@@ -54,9 +56,9 @@ window.addEventListener('load', () => {
   window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     if (currentScroll > 50) {
-      navbar.style.background = 'rgba(var(--bg-primary), 0.98)';
+      navbar.classList.add('scrolled');
     } else {
-      navbar.style.background = 'rgba(var(--bg-primary), 0.95)';
+      navbar.classList.remove('scrolled');
     }
 
     if (currentScroll > 100 && currentScroll > lastScroll) {
@@ -79,7 +81,9 @@ window.addEventListener('load', () => {
     document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
   }
 
-  hamburger.addEventListener('click', toggleMenu);
+  if (hamburger) {
+    hamburger.addEventListener('click', toggleMenu);
+  }
 
   document.querySelectorAll('.mob-link').forEach((link) => {
     link.addEventListener('click', toggleMenu);
@@ -127,16 +131,16 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       // Close mobile menu if open
       const mobileMenu = document.getElementById('mobileMenu');
       const hamburger = document.getElementById('hamburger');
-      if (mobileMenu.classList.contains('open')) {
+      if (mobileMenu && mobileMenu.classList.contains('open')) {
         mobileMenu.classList.remove('open');
-        hamburger.classList.remove('open');
+        if (hamburger) hamburger.classList.remove('open');
         document.body.style.overflow = '';
       }
     }
   });
 });
 
-// ========== NUMBER COUNTERS ==========
+// ========== NUMBER COUNTERS (FIXED - ensures animation on load) ==========
 (function () {
   const counters = document.querySelectorAll('.stat-number[data-count]');
 
@@ -155,7 +159,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
               counter.textContent = Math.floor(current);
               requestAnimationFrame(updateCounter);
             } else {
-              counter.textContent = target;
+              counter.textContent = target + '+';
             }
           };
           updateCounter();
@@ -163,10 +167,20 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         }
       });
     },
-    { threshold: 0.5 }
+    { threshold: 0.3, rootMargin: '0px 0px -50px 0px' }
   );
 
   counters.forEach((counter) => observer.observe(counter));
+
+  // Also trigger counters that are already visible on load
+  setTimeout(() => {
+    counters.forEach((counter) => {
+      const rect = counter.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        observer.observe(counter);
+      }
+    });
+  }, 500);
 })();
 
 // ========== SCROLL REVEAL ==========
@@ -322,29 +336,40 @@ const serviceDetails = {
     const details = serviceDetails[serviceId];
     if (!details) return;
 
-    document.querySelector('.modal-icon').innerHTML = details.icon;
-    document.querySelector('.modal-title').textContent = details.title;
-    document.querySelector('.modal-description').textContent = details.description;
+    const modalIcon = document.querySelector('.modal-icon');
+    const modalTitle = document.querySelector('.modal-title');
+    const modalDesc = document.querySelector('.modal-description');
+    const modalFeatures = document.querySelector('.modal-features');
 
-    const featuresHtml = `
-      <ul style="list-style: none;">
-        ${details.features.map((f) => `<li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 10px;"></i> ${f}</li>`).join('')}
-      </ul>
-    `;
-    document.querySelector('.modal-features').innerHTML = featuresHtml;
+    if (modalIcon) modalIcon.innerHTML = details.icon;
+    if (modalTitle) modalTitle.textContent = details.title;
+    if (modalDesc) modalDesc.textContent = details.description;
 
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    if (modalFeatures) {
+      const featuresHtml = `
+        <ul style="list-style: none;">
+          ${details.features.map((f) => `<li><i class="fas fa-check-circle" style="color: var(--accent); margin-right: 10px;"></i> ${f}</li>`).join('')}
+        </ul>
+      `;
+      modalFeatures.innerHTML = featuresHtml;
+    }
+
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   serviceCards.forEach((card) => {
     const learnBtn = card.querySelector('.card-learn-more');
     const serviceId = card.getAttribute('data-service');
 
-    learnBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openModal(serviceId);
-    });
+    if (learnBtn) {
+      learnBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openModal(serviceId);
+      });
+    }
 
     card.addEventListener('click', () => {
       openModal(serviceId);
@@ -352,17 +377,21 @@ const serviceDetails = {
   });
 
   function closeModal() {
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
   }
 
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
+    if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
       closeModal();
     }
   });
@@ -389,23 +418,26 @@ const serviceDetails = {
 })();
 
 // Add floating animation style
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes float {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-20px) translateX(10px); }
-  }
-`;
-document.head.appendChild(style);
+if (!document.querySelector('#float-style')) {
+  const style = document.createElement('style');
+  style.id = 'float-style';
+  style.textContent = `
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-20px) translateX(10px); }
+    }
+  `;
+  document.head.appendChild(style);
+}
 
 // ========== SERVICE CARD HOVER ANIMATION ==========
 document.querySelectorAll('.service-card').forEach((card) => {
   card.addEventListener('mouseenter', function () {
-    this.style.transform = 'translateY(-8px)';
+    this.style.transform = 'translateY(-4px)';
   });
   card.addEventListener('mouseleave', function () {
     this.style.transform = '';
   });
 });
 
-console.log('KandoTech — Fully loaded with premium features!');
+console.log('KandoTech — TIER 1 improvements implemented!');
