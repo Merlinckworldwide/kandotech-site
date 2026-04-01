@@ -6,6 +6,32 @@ window.addEventListener('load', () => {
   setTimeout(() => loader.classList.add('hide'), 1200);
 });
 
+// ========== CUSTOM CURSOR ==========
+(function () {
+  const cursorDot = document.getElementById('cursorDot');
+  const cursorOutline = document.getElementById('cursorOutline');
+  if (!cursorDot || !cursorOutline) return;
+
+  let mouseX = 0,
+    mouseY = 0;
+  let outlineX = 0,
+    outlineY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.transform = `translate(${mouseX - 3}px, ${mouseY - 3}px)`;
+  });
+
+  function animateOutline() {
+    outlineX += (mouseX - outlineX) * 0.12;
+    outlineY += (mouseY - outlineY) * 0.12;
+    cursorOutline.style.transform = `translate(${outlineX - 16}px, ${outlineY - 16}px)`;
+    requestAnimationFrame(animateOutline);
+  }
+  animateOutline();
+})();
+
 // ========== THEME TOGGLE ==========
 (function () {
   const themeToggle = document.getElementById('themeToggle');
@@ -24,22 +50,22 @@ window.addEventListener('load', () => {
   });
 })();
 
-// ========== FLOATING HELP BUTTON ==========
+// ========== FLOATING ACTION BUTTON ==========
 (function () {
-  const floatingHelp = document.getElementById('floatingHelp');
-  const helpButton = document.getElementById('helpButton');
-  if (helpButton) {
-    helpButton.addEventListener('click', (e) => {
+  const fab = document.getElementById('fab');
+  const fabMain = document.getElementById('fabMain');
+  if (fabMain) {
+    fabMain.addEventListener('click', (e) => {
       e.stopPropagation();
-      floatingHelp.classList.toggle('open');
+      fab.classList.toggle('open');
     });
     document.addEventListener('click', (e) => {
-      if (!floatingHelp.contains(e.target)) floatingHelp.classList.remove('open');
+      if (!fab.contains(e.target)) fab.classList.remove('open');
     });
   }
 })();
 
-// ========== NAVBAR SCROLL EFFECT ==========
+// ========== NAVBAR SCROLL ==========
 (function () {
   const navbar = document.getElementById('navbar');
   let lastScroll = 0;
@@ -77,7 +103,7 @@ window.addEventListener('load', () => {
   const navLinks = document.querySelectorAll('.nav-link');
   window.addEventListener('scroll', () => {
     let current = '';
-    const scrollPos = window.scrollY + 120;
+    const scrollPos = window.scrollY + 100;
     sections.forEach((section) => {
       const sectionTop = section.offsetTop;
       const sectionBottom = sectionTop + section.offsetHeight;
@@ -107,9 +133,9 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       window.scrollTo({ top: offsetTop, behavior: 'smooth' });
       const mobileMenu = document.getElementById('mobileMenu');
       const hamburger = document.getElementById('hamburger');
-      if (mobileMenu && mobileMenu.classList.contains('open')) {
+      if (mobileMenu?.classList.contains('open')) {
         mobileMenu.classList.remove('open');
-        if (hamburger) hamburger.classList.remove('open');
+        hamburger?.classList.remove('open');
         document.body.style.overflow = '';
       }
     }
@@ -133,7 +159,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
               counter.textContent = Math.floor(current);
               requestAnimationFrame(updateCounter);
             } else {
-              counter.textContent = target + '+';
+              counter.textContent = target + (target >= 100 ? '+' : '');
             }
           };
           updateCounter();
@@ -165,8 +191,9 @@ const serviceDetails = {
       'Software issues & flashing',
       'FRP bypass & unlocking',
       'Charging port repair',
-      'Camera & speaker repair',
     ],
+    turnaround: '1-2 hours',
+    rating: '4.9',
   },
   computer: {
     icon: '💻',
@@ -179,8 +206,9 @@ const serviceDetails = {
       'Motherboard repair',
       'Data recovery',
       'Driver installation',
-      'Screen & keyboard replacement',
     ],
+    turnaround: '2-4 hours',
+    rating: '4.8',
   },
   appliances: {
     icon: '⚡',
@@ -193,8 +221,9 @@ const serviceDetails = {
       'Water heater service',
       'Electrical wiring',
       'Microwave repair',
-      'Fridge & freezer repair',
     ],
+    turnaround: 'Same day',
+    rating: '4.7',
   },
   hardware: {
     icon: '🔧',
@@ -206,8 +235,9 @@ const serviceDetails = {
       'Cooling system repair',
       'Power supply fix',
       'Motherboard diagnostics',
-      'Chip-level repair',
     ],
+    turnaround: '2-3 hours',
+    rating: '4.8',
   },
   'custom-software': {
     icon: '🛠️',
@@ -219,8 +249,9 @@ const serviceDetails = {
       'ERP solutions',
       'Automation tools',
       'Inventory systems',
-      'Reporting dashboards',
     ],
+    turnaround: '2-4 weeks',
+    rating: '5.0',
   },
   'mobile-apps': {
     icon: '📱',
@@ -232,8 +263,9 @@ const serviceDetails = {
       'Flutter cross-platform',
       'React Native apps',
       'App store deployment',
-      'UI/UX design',
     ],
+    turnaround: '3-6 weeks',
+    rating: '5.0',
   },
   api: {
     icon: '🔌',
@@ -245,8 +277,9 @@ const serviceDetails = {
       'Microservices architecture',
       'Database integration',
       'Authentication systems',
-      'Cloud deployment',
     ],
+    turnaround: '1-3 weeks',
+    rating: '4.9',
   },
   database: {
     icon: '🗄️',
@@ -258,8 +291,9 @@ const serviceDetails = {
       'Database migration',
       'Performance tuning',
       'Backup & recovery',
-      'Data warehousing',
     ],
+    turnaround: '1-2 weeks',
+    rating: '4.9',
   },
   web: {
     icon: '🌐',
@@ -271,8 +305,9 @@ const serviceDetails = {
       'CMS integration (WordPress)',
       'SEO optimization',
       'Hosting setup',
-      'Website maintenance',
     ],
+    turnaround: '1-3 weeks',
+    rating: '4.9',
   },
   ecommerce: {
     icon: '🛒',
@@ -283,9 +318,10 @@ const serviceDetails = {
       'Payment gateway integration',
       'Inventory management',
       'Order processing',
-      'Product catalog setup',
-      'Mobile-responsive stores',
+      'Product catalog',
     ],
+    turnaround: '2-4 weeks',
+    rating: '4.8',
   },
   cloud: {
     icon: '☁️',
@@ -297,8 +333,9 @@ const serviceDetails = {
       'Cloud migration',
       'Email hosting',
       'Data backup',
-      'Collaboration tools',
     ],
+    turnaround: '24-48 hours',
+    rating: '4.9',
   },
   marketing: {
     icon: '📊',
@@ -310,8 +347,9 @@ const serviceDetails = {
       'Google Ads campaigns',
       'Content creation',
       'Email marketing',
-      'Analytics & reporting',
     ],
+    turnaround: 'Ongoing',
+    rating: '4.7',
   },
   networking: {
     icon: '📡',
@@ -323,9 +361,9 @@ const serviceDetails = {
       'Server configuration',
       'VPN setup',
       'Network security',
-      'Cloud services',
-      'Data backup solutions',
     ],
+    turnaround: '1-2 days',
+    rating: '4.8',
   },
   cybersecurity: {
     icon: '🔒',
@@ -337,8 +375,9 @@ const serviceDetails = {
       'Data protection',
       'Threat monitoring',
       'Vulnerability assessment',
-      'Employee training',
     ],
+    turnaround: '1-3 days',
+    rating: '4.9',
   },
   itsupport: {
     icon: '🖥️',
@@ -350,8 +389,9 @@ const serviceDetails = {
       'System maintenance',
       'Troubleshooting',
       'Hardware setup',
-      'Software installation',
     ],
+    turnaround: '24/7',
+    rating: '4.8',
   },
   businessit: {
     icon: '🏢',
@@ -362,9 +402,10 @@ const serviceDetails = {
       'CRM implementation',
       'Process automation',
       'Inventory systems',
-      'Business analytics',
       'IT consulting',
     ],
+    turnaround: 'Custom',
+    rating: '4.9',
   },
   graphic: {
     icon: '🎨',
@@ -376,8 +417,9 @@ const serviceDetails = {
       'Posters & flyers',
       'Social media graphics',
       'Business cards',
-      'Packaging design',
     ],
+    turnaround: '1-2 days',
+    rating: '4.9',
   },
   printing: {
     icon: '🖨️',
@@ -389,8 +431,9 @@ const serviceDetails = {
       'Flyers & posters',
       'Event cards',
       'Sticker printing',
-      'Document printing',
     ],
+    turnaround: 'Same day',
+    rating: '4.8',
   },
   motion: {
     icon: '🎬',
@@ -402,8 +445,9 @@ const serviceDetails = {
       'Explainer videos',
       'Social media reels',
       'Motion typography',
-      '2D/3D animation',
     ],
+    turnaround: '3-7 days',
+    rating: '4.9',
   },
   branding: {
     icon: '👕',
@@ -415,8 +459,9 @@ const serviceDetails = {
       'Mugs & merchandise',
       'Corporate gifts',
       'Branded stationery',
-      'Promotional items',
     ],
+    turnaround: '5-10 days',
+    rating: '4.8',
   },
   training: {
     icon: '🎓',
@@ -427,9 +472,10 @@ const serviceDetails = {
       'Web development bootcamp',
       'Networking fundamentals',
       'Cybersecurity basics',
-      'Graphic design training',
       'Certificate upon completion',
     ],
+    turnaround: 'Weekly',
+    rating: '4.9',
   },
   cv: {
     icon: '📄',
@@ -441,8 +487,9 @@ const serviceDetails = {
       'Cover letters',
       'LinkedIn profile sync',
       'Portfolio creation',
-      'Job application prep',
     ],
+    turnaround: '24 hours',
+    rating: '4.9',
   },
   profile: {
     icon: '👔',
@@ -454,8 +501,9 @@ const serviceDetails = {
       'Upwork profile',
       'Portfolio setup',
       'Personal branding',
-      'Profile content writing',
     ],
+    turnaround: '1-2 days',
+    rating: '4.8',
   },
   career: {
     icon: '🎯',
@@ -467,8 +515,9 @@ const serviceDetails = {
       'Certification guidance',
       'Skill assessment',
       'Salary negotiation',
-      'Industry insights',
     ],
+    turnaround: '1-on-1',
+    rating: '5.0',
   },
 };
 
@@ -477,6 +526,7 @@ const serviceDetails = {
   const modal = document.getElementById('serviceModal');
   const modalClose = document.querySelector('.modal-close');
   const serviceCards = document.querySelectorAll('.service-card');
+  const modalBookBtn = document.getElementById('modalBookBtn');
 
   function openModal(serviceId) {
     const details = serviceDetails[serviceId];
@@ -486,6 +536,8 @@ const serviceDetails = {
     document.querySelector('.modal-description').textContent = details.description;
     const featuresHtml = `<ul>${details.features.map((f) => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}</ul>`;
     document.querySelector('.modal-features').innerHTML = featuresHtml;
+    document.getElementById('modalTurnaround').textContent = details.turnaround;
+    document.getElementById('modalRating').textContent = `⭐ ${details.rating}`;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -507,31 +559,19 @@ const serviceDetails = {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal?.classList.contains('active')) closeModal();
   });
-})();
-
-// ========== PARTICLE BACKGROUND ==========
-(function () {
-  const particlesContainer = document.querySelector('.hero-bg-particles');
-  if (!particlesContainer) return;
-  for (let i = 0; i < 60; i++) {
-    const particle = document.createElement('div');
-    particle.style.cssText = `position:absolute; width:${Math.random() * 3 + 1}px; height:${Math.random() * 3 + 1}px; background:var(--accent); border-radius:50%; opacity:${Math.random() * 0.25}; left:${Math.random() * 100}%; top:${Math.random() * 100}%; animation:float ${Math.random() * 12 + 5}s ease-in-out infinite; animation-delay:${Math.random() * 5}s`;
-    particlesContainer.appendChild(particle);
+  if (modalBookBtn) {
+    modalBookBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeModal();
+      document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+    });
   }
 })();
 
-if (!document.querySelector('#float-style')) {
-  const style = document.createElement('style');
-  style.id = 'float-style';
-  style.textContent =
-    '@keyframes float { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-25px) translateX(12px); } }';
-  document.head.appendChild(style);
-}
-
-// ========== REVEAL ON SCROLL ==========
+// ========== SCROLL REVEAL ANIMATIONS ==========
 (function () {
   const revealElements = document.querySelectorAll(
-    '.service-card, .category-block, .about-content, .about-stats, .contact-card, .section-header'
+    '.service-card, .portfolio-item, .testimonial-card, .category-block, .about-content, .about-stats, .contact-card'
   );
   const observer = new IntersectionObserver(
     (entries) => {
@@ -543,14 +583,33 @@ if (!document.querySelector('#float-style')) {
         }
       });
     },
-    { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+    { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
   );
   revealElements.forEach((el) => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(18px)';
-    el.style.transition = 'opacity 0.35s ease-out, transform 0.35s ease-out';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
     observer.observe(el);
   });
 })();
 
-console.log('KandoTech — Fully optimized with smooth transitions!');
+// ========== PARTICLE BACKGROUND ==========
+(function () {
+  const heroBg = document.querySelector('.hero-bg');
+  if (!heroBg) return;
+  for (let i = 0; i < 40; i++) {
+    const particle = document.createElement('div');
+    particle.style.cssText = `position:absolute; width:${Math.random() * 3 + 1}px; height:${Math.random() * 3 + 1}px; background:var(--accent); border-radius:50%; opacity:${Math.random() * 0.2}; left:${Math.random() * 100}%; top:${Math.random() * 100}%; animation:float ${Math.random() * 15 + 8}s ease-in-out infinite; animation-delay:${Math.random() * 5}s`;
+    heroBg.appendChild(particle);
+  }
+})();
+
+if (!document.querySelector('#float-keyframes')) {
+  const style = document.createElement('style');
+  style.id = 'float-keyframes';
+  style.textContent =
+    '@keyframes float { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-20px) translateX(15px); } }';
+  document.head.appendChild(style);
+}
+
+console.log('KandoTech — 10/10 version loaded! 🚀');

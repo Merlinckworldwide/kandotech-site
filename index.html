@@ -3,51 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>KandoTech Solutions — Premium Tech Services Malawi</title>
+    <title>KandoTech — Premium Tech Solutions Malawi</title>
     <meta
       name="description"
-      content="Professional tech solutions in Malawi. Phone repair, software development, web development, networking, graphic design and more. Fast, reliable, local."
+      content="Malawi's trusted tech partner. Phone repair, software development, web design, networking, training — fast, reliable, local."
     />
     <meta
       name="keywords"
-      content="phone repair Malawi, software development Malawi, web development Malawi, computer repair Blantyre, tech services Malawi"
+      content="phone repair Malawi, software development Malawi, web development Blantyre, tech services Malawi"
     />
     <meta name="author" content="KandoTech Solutions" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome (for icons, will replace with custom SVGs gradually) -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>"
+    />
   </head>
   <body>
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <!-- Custom Cursor (Desktop only) -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
       <i class="fas fa-sun"></i>
       <i class="fas fa-moon"></i>
     </button>
 
-    <!-- Floating Help Button -->
-    <div class="floating-help" id="floatingHelp">
-      <button class="help-button" id="helpButton">
-        <i class="fas fa-headset"></i>
+    <!-- Floating Action Button -->
+    <div class="fab" id="fab">
+      <button class="fab-main" id="fabMain">
+        <i class="fas fa-bolt"></i>
         <i class="fas fa-times"></i>
       </button>
-      <div class="help-options">
-        <a href="https://wa.me/265881375396" target="_blank" class="help-option whatsapp-help">
+      <div class="fab-menu">
+        <a
+          href="https://wa.me/265881375396"
+          target="_blank"
+          class="fab-item"
+          data-tooltip="WhatsApp — reply &lt;5min"
+        >
           <i class="fab fa-whatsapp"></i>
-          <span>WhatsApp</span>
-          <small>Reply &lt;5min</small>
         </a>
-        <a href="tel:+265881375396" class="help-option call-help">
+        <a href="tel:+265881375396" class="fab-item" data-tooltip="Call Now — 24/7">
           <i class="fas fa-phone-alt"></i>
-          <span>Call Now</span>
-          <small>24/7 Support</small>
+        </a>
+        <a href="#booking" class="fab-item" data-tooltip="Book Service">
+          <i class="fas fa-calendar-check"></i>
         </a>
       </div>
     </div>
@@ -62,19 +80,45 @@
     <nav id="navbar">
       <div class="nav-container">
         <a href="#" class="nav-logo">
-          <span class="logo-kando">Kando</span><span class="logo-tech">Tech</span>
-          <span class="logo-badge">™</span>
+          <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="12" fill="url(#gradient)" />
+            <path
+              d="M12 20L18 14L24 20L18 26L12 20Z"
+              fill="white"
+              stroke="white"
+              stroke-width="1.5"
+            />
+            <path
+              d="M20 12V28M14 18H26"
+              stroke="url(#gradient)"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <defs>
+              <linearGradient
+                id="gradient"
+                x1="0"
+                y1="0"
+                x2="40"
+                y2="40"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#2563eb" />
+                <stop offset="1" stop-color="#7c3aed" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="logo-text">Kando<span>Tech</span></span>
         </a>
         <ul class="nav-links">
           <li><a href="#home" class="nav-link active">Home</a></li>
           <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#work" class="nav-link">Our Work</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
         <div class="nav-actions">
-          <a href="tel:+265881375396" class="nav-phone">
-            <i class="fas fa-phone-alt"></i> <span>Call Us</span>
-          </a>
+          <a href="#booking" class="btn-primary-small">Book Now</a>
           <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
         </div>
       </div>
@@ -85,8 +129,10 @@
       <div class="mobile-menu-inner">
         <a href="#home" class="mob-link">Home</a>
         <a href="#services" class="mob-link">Services</a>
+        <a href="#work" class="mob-link">Our Work</a>
         <a href="#about" class="mob-link">About</a>
         <a href="#contact" class="mob-link">Contact</a>
+        <a href="#booking" class="mob-link btn-mob-primary">Book Now</a>
         <div class="mob-info">
           <p><i class="fas fa-phone"></i> 0881 375 396</p>
           <p><i class="fab fa-whatsapp"></i> 0881 375 396</p>
@@ -96,22 +142,23 @@
       </div>
     </div>
 
-    <!-- Hero Section - Quick Support Removed -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
-      <div class="hero-bg-particles"></div>
+      <div class="hero-bg"></div>
       <div class="hero-container">
-        <div class="hero-left">
+        <div class="hero-content">
           <div class="hero-badge">
-            <span class="badge-text">🇲🇼 Malawi's #1 Tech Partner</span>
+            <span class="live-dot"></span>
+            <span>Available 24/7 — Reply in &lt;5min</span>
           </div>
           <h1 class="hero-title">
-            <span class="title-line">We <span class="accent-text">Fix.</span></span>
-            <span class="title-line">We <span class="accent-text-outline">Build.</span></span>
-            <span class="title-line">We <span class="accent-text">Create.</span></span>
+            <span class="title-line">We <span class="gradient-text">Fix.</span></span>
+            <span class="title-line">We <span class="gradient-outline">Build.</span></span>
+            <span class="title-line">We <span class="gradient-text">Create.</span></span>
           </h1>
           <p class="hero-desc">
-            Professional tech solutions tailored for Malawi. From phone repairs to software
-            development — fast, reliable, and built to last.
+            Malawi's most trusted tech partner. From phone repairs to custom software — fast,
+            reliable, and built for the local market.
           </p>
           <div class="hero-buttons">
             <a href="#services" class="btn-primary">
@@ -125,222 +172,563 @@
           </div>
           <div class="hero-stats">
             <div class="stat">
-              <div class="stat-number" data-count="26">0</div>
-              <div class="stat-label">Services</div>
-            </div>
-            <div class="stat">
               <div class="stat-number" data-count="500">0</div>
-              <div class="stat-label">Happy Clients</div>
+              <div class="stat-label">Devices Repaired</div>
             </div>
             <div class="stat">
-              <div class="stat-number">24/7</div>
-              <div class="stat-label">Support</div>
+              <div class="stat-number" data-count="98">0</div>
+              <div class="stat-label">Satisfaction %</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" data-count="4">0</div>
+              <div class="stat-label">Expert Techs</div>
             </div>
           </div>
         </div>
+        <div class="hero-image">
+          <div class="hero-card-glow">
+            <div class="hero-card">
+              <div class="card-rating">⭐ 4.9 · 150+ reviews</div>
+              <div class="card-quote">"Fixed my iPhone in 2 hours! Best service in Blantyre."</div>
+              <div class="card-author">— Thandie M., Lilongwe</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <div class="scroll-mouse"></div>
       </div>
     </section>
 
     <!-- Marquee -->
     <div class="marquee">
       <div class="marquee-content">
-        <span>📱 Phone Repair</span>
-        <span>💻 Computer Repair</span>
-        <span>🌐 Web Development</span>
-        <span>🎨 Graphic Design</span>
-        <span>📡 Networking</span>
-        <span>🔧 Hardware Repair</span>
-        <span>⚡ Home Appliances</span>
-        <span>📊 Digital Marketing</span>
-        <span>🛠️ Software Dev</span>
-        <span>📱 Mobile Apps</span>
+        <span>📱 Phone Repair</span><span class="sep">✦</span> <span>💻 Computer Repair</span
+        ><span class="sep">✦</span> <span>🌐 Web Development</span><span class="sep">✦</span>
+        <span>🎨 Graphic Design</span><span class="sep">✦</span> <span>📡 Networking</span
+        ><span class="sep">✦</span> <span>🔧 Hardware Fix</span><span class="sep">✦</span>
+        <span>⚡ Home Appliances</span><span class="sep">✦</span> <span>📊 Digital Marketing</span
+        ><span class="sep">✦</span> <span>🛠️ Software Dev</span><span class="sep">✦</span>
+        <span>📱 Mobile Apps</span><span class="sep">✦</span>
       </div>
     </div>
 
-    <!-- SERVICES SECTION - Categorized Layout with Bigger Headers -->
+    <!-- Services Section -->
     <section class="services" id="services">
       <div class="container">
-        <h2 class="services-heading">Our Services</h2>
-        <p class="services-sub">
-          Comprehensive tech solutions for every need — tap any card for details
-        </p>
+        <div class="section-header">
+          <div class="section-tag">What We Offer</div>
+          <h2 class="section-title">Our <span class="gradient-text">Services</span></h2>
+          <p class="section-desc">
+            Tap any service for full details — pricing, turnaround time, and instant booking
+          </p>
+        </div>
 
-        <!-- DEVICE REPAIR & HARDWARE -->
+        <!-- Device Repair -->
         <div class="category-block">
           <div class="category-header">
-            <div class="category-dot" style="background: #378add"></div>
+            <div class="category-icon">🔧</div>
             <h3 class="category-title">Device Repair & Hardware</h3>
           </div>
           <div class="services-grid">
             <div class="service-card" data-service="phone">
-              <div class="card-icon">📱</div>
-              <div class="card-name">Phone Repair</div>
-              <div class="card-sub">Screen, battery, water damage</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="5" y="2" width="14" height="20" rx="2" />
+                  <line x1="12" y1="18" x2="12" y2="18" stroke-width="2" />
+                </svg>
+              </div>
+              <h3>Phone Repair</h3>
+              <p>Screen, battery, water damage, software</p>
+              <div class="card-meta"><span>⚡ 1-2 hours</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="computer">
-              <div class="card-icon">💻</div>
-              <div class="card-name">Computer Repair</div>
-              <div class="card-sub">Hardware, software, virus</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              </div>
+              <h3>Computer Repair</h3>
+              <p>Hardware, virus, upgrades, data recovery</p>
+              <div class="card-meta"><span>⚡ 2-4 hours</span><span>⭐ 4.8</span></div>
             </div>
             <div class="service-card" data-service="appliances">
-              <div class="card-icon">⚡</div>
-              <div class="card-name">Home Appliances</div>
-              <div class="card-sub">TV, kettle, iron, cooker</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M12 2v4M8 4l4 2 4-2" />
+                  <rect x="4" y="8" width="16" height="14" rx="2" />
+                </svg>
+              </div>
+              <h3>Home Appliances</h3>
+              <p>TV, kettle, iron, cooker, wiring</p>
+              <div class="card-meta"><span>⚡ Same day</span><span>⭐ 4.7</span></div>
             </div>
             <div class="service-card" data-service="hardware">
-              <div class="card-icon">🔧</div>
-              <div class="card-name">Hardware Fix</div>
-              <div class="card-sub">Components, upgrades</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M12 6v12M8 10h8" />
+                  <circle cx="12" cy="12" r="9" />
+                </svg>
+              </div>
+              <h3>Hardware Fix</h3>
+              <p>Components, upgrades, motherboard</p>
+              <div class="card-meta"><span>⚡ 2-3 hours</span><span>⭐ 4.8</span></div>
             </div>
           </div>
         </div>
 
-        <!-- SOFTWARE DEVELOPMENT -->
+        <!-- Software Development -->
         <div class="category-block">
           <div class="category-header">
-            <div class="category-dot" style="background: #1d9e75"></div>
+            <div class="category-icon">💻</div>
             <h3 class="category-title">Software Development</h3>
           </div>
           <div class="services-grid">
             <div class="service-card" data-service="custom-software">
-              <div class="card-icon">🛠️</div>
-              <div class="card-name">Custom Software</div>
-              <div class="card-sub">Desktop & web apps</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              </div>
+              <h3>Custom Software</h3>
+              <p>Desktop apps, ERP, CRM, automation</p>
+              <div class="card-meta"><span>⏱️ 2-4 weeks</span><span>⭐ 5.0</span></div>
             </div>
             <div class="service-card" data-service="mobile-apps">
-              <div class="card-icon">📱</div>
-              <div class="card-name">Mobile Apps</div>
-              <div class="card-sub">Android & iOS</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="5" y="2" width="14" height="20" rx="2" />
+                  <line x1="12" y1="18" x2="12" y2="18" stroke-width="2" />
+                </svg>
+              </div>
+              <h3>Mobile Apps</h3>
+              <p>iOS, Android, Flutter, React Native</p>
+              <div class="card-meta"><span>⏱️ 3-6 weeks</span><span>⭐ 5.0</span></div>
             </div>
             <div class="service-card" data-service="api">
-              <div class="card-icon">🔌</div>
-              <div class="card-name">API & Backend</div>
-              <div class="card-sub">REST, databases, integrations</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M4 4L20 20M20 4L4 20" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+              <h3>API & Backend</h3>
+              <p>REST APIs, microservices, integrations</p>
+              <div class="card-meta"><span>⏱️ 1-3 weeks</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="database">
-              <div class="card-icon">🗄️</div>
-              <div class="card-name">Database Systems</div>
-              <div class="card-sub">Design, setup, migration</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <ellipse cx="12" cy="5" rx="9" ry="3" />
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                </svg>
+              </div>
+              <h3>Database Systems</h3>
+              <p>MySQL, PostgreSQL, MongoDB, migration</p>
+              <div class="card-meta"><span>⏱️ 1-2 weeks</span><span>⭐ 4.9</span></div>
             </div>
           </div>
         </div>
 
-        <!-- WEB & DIGITAL PRESENCE -->
+        <!-- Web & Digital -->
         <div class="category-block">
           <div class="category-header">
-            <div class="category-dot" style="background: #7f77dd"></div>
+            <div class="category-icon">🌐</div>
             <h3 class="category-title">Web & Digital Presence</h3>
           </div>
           <div class="services-grid">
             <div class="service-card" data-service="web">
-              <div class="card-icon">🌐</div>
-              <div class="card-name">Web Development</div>
-              <div class="card-sub">Sites, SEO, hosting</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <circle cx="12" cy="12" r="3" />
+                  <path
+                    d="M19.4 15a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H5.78a1.65 1.65 0 0 0-1.51 1 1.65 1.65 0 0 0 .33 1.82l.04.04A10 10 0 0 0 12 17.66a10 10 0 0 0 6.36-2.62l.04-.04z"
+                  />
+                </svg>
+              </div>
+              <h3>Web Development</h3>
+              <p>Sites, e-commerce, CMS, SEO, hosting</p>
+              <div class="card-meta"><span>⏱️ 1-3 weeks</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="ecommerce">
-              <div class="card-icon">🛒</div>
-              <div class="card-name">E-commerce</div>
-              <div class="card-sub">Shops, payments, inventory</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg>
+              </div>
+              <h3>E-commerce</h3>
+              <p>Shops, payments, inventory management</p>
+              <div class="card-meta"><span>⏱️ 2-4 weeks</span><span>⭐ 4.8</span></div>
             </div>
             <div class="service-card" data-service="cloud">
-              <div class="card-icon">☁️</div>
-              <div class="card-name">Cloud & Email</div>
-              <div class="card-sub">Setup, migration, support</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                </svg>
+              </div>
+              <h3>Cloud & Email</h3>
+              <p>Google Workspace, M365, migration, support</p>
+              <div class="card-meta"><span>⚡ 24-48h</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="marketing">
-              <div class="card-icon">📊</div>
-              <div class="card-name">Digital Marketing</div>
-              <div class="card-sub">Social media, ads, SEO</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                  />
+                  <path d="M12 22V12" />
+                </svg>
+              </div>
+              <h3>Digital Marketing</h3>
+              <p>Social media, ads, SEO, content</p>
+              <div class="card-meta"><span>📈 Ongoing</span><span>⭐ 4.7</span></div>
             </div>
           </div>
         </div>
 
-        <!-- IT & NETWORKING -->
+        <!-- IT & Networking -->
         <div class="category-block">
           <div class="category-header">
-            <div class="category-dot" style="background: #d85a30"></div>
+            <div class="category-icon">📡</div>
             <h3 class="category-title">IT & Networking</h3>
           </div>
           <div class="services-grid">
             <div class="service-card" data-service="networking">
-              <div class="card-icon">📡</div>
-              <div class="card-name">Networking</div>
-              <div class="card-sub">WiFi, CCTV, LAN setup</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              </div>
+              <h3>Networking</h3>
+              <p>WiFi, CCTV, servers, VPN, security</p>
+              <div class="card-meta"><span>⚡ 1-2 days</span><span>⭐ 4.8</span></div>
             </div>
             <div class="service-card" data-service="cybersecurity">
-              <div class="card-icon">🔒</div>
-              <div class="card-name">Cybersecurity</div>
-              <div class="card-sub">Audits, protection, VPN</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M12 3L3 8l9 5 9-5-9-5z" />
+                  <path d="M12 13v8" />
+                  <path d="M21 12v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5" />
+                </svg>
+              </div>
+              <h3>Cybersecurity</h3>
+              <p>Audits, protection, VPN, firewall</p>
+              <div class="card-meta"><span>⚡ 1-3 days</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="itsupport">
-              <div class="card-icon">🖥️</div>
-              <div class="card-name">IT Support</div>
-              <div class="card-sub">Helpdesk, maintenance</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4l3 3" />
+                </svg>
+              </div>
+              <h3>IT Support</h3>
+              <p>Helpdesk, maintenance, remote assist</p>
+              <div class="card-meta"><span>⚡ 24/7</span><span>⭐ 4.8</span></div>
             </div>
             <div class="service-card" data-service="businessit">
-              <div class="card-icon">🏢</div>
-              <div class="card-name">Business IT</div>
-              <div class="card-sub">POS, CRM, automation</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="2" y="7" width="20" height="14" rx="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
+              </div>
+              <h3>Business IT</h3>
+              <p>POS, CRM, automation, consulting</p>
+              <div class="card-meta"><span>⏱️ Custom</span><span>⭐ 4.9</span></div>
             </div>
           </div>
         </div>
 
-        <!-- CREATIVE & PRINTING -->
+        <!-- Creative & Printing -->
         <div class="category-block">
           <div class="category-header">
-            <div class="category-dot" style="background: #d4537e"></div>
+            <div class="category-icon">🎨</div>
             <h3 class="category-title">Creative & Printing</h3>
           </div>
           <div class="services-grid">
             <div class="service-card" data-service="graphic">
-              <div class="card-icon">🎨</div>
-              <div class="card-name">Graphic Design</div>
-              <div class="card-sub">Logos, posters, branding</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 22v-4M19.07 19.07l-2.83-2.83M22 12h-4M19.07 4.93l-2.83 2.83"
+                  />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+              <h3>Graphic Design</h3>
+              <p>Logos, posters, branding, business cards</p>
+              <div class="card-meta"><span>⚡ 1-2 days</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="printing">
-              <div class="card-icon">🖨️</div>
-              <div class="card-name">Printing</div>
-              <div class="card-sub">Banners, cards, flyers</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"
+                  />
+                  <path d="M6 9V3h12v6" />
+                  <rect x="6" y="15" width="12" height="6" rx="1" />
+                </svg>
+              </div>
+              <h3>Printing</h3>
+              <p>Banners, cards, flyers, stickers</p>
+              <div class="card-meta"><span>⚡ Same day</span><span>⭐ 4.8</span></div>
             </div>
             <div class="service-card" data-service="motion">
-              <div class="card-icon">🎬</div>
-              <div class="card-name">Motion Graphics</div>
-              <div class="card-sub">Video, animation, reels</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <rect x="2" y="6" width="20" height="12" rx="2" />
+                  <path d="M8 12h8" />
+                </svg>
+              </div>
+              <h3>Motion Graphics</h3>
+              <p>Animation, intro videos, reels</p>
+              <div class="card-meta"><span>⏱️ 3-7 days</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="branding">
-              <div class="card-icon">👕</div>
-              <div class="card-name">Branding & Merch</div>
-              <div class="card-sub">T-shirts, uniforms, gear</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M20 7h-4.18A3 3 0 0 0 16 5.18V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v1.18A3 3 0 0 0 8.18 7H4"
+                  />
+                  <path d="M4 7v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7" />
+                </svg>
+              </div>
+              <h3>Branding & Merch</h3>
+              <p>T-shirts, uniforms, mugs, corporate gifts</p>
+              <div class="card-meta"><span>⏱️ 5-10 days</span><span>⭐ 4.8</span></div>
             </div>
           </div>
         </div>
 
-        <!-- TRAINING & CAREER -->
+        <!-- Training & Career -->
         <div class="category-block">
           <div class="category-header">
-            <div class="category-dot" style="background: #ba7517"></div>
+            <div class="category-icon">🎓</div>
             <h3 class="category-title">Training & Career</h3>
           </div>
           <div class="services-grid">
             <div class="service-card" data-service="training">
-              <div class="card-icon">🎓</div>
-              <div class="card-name">Tech Training</div>
-              <div class="card-sub">Courses, workshops</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M12 6v7m0 0v7m0-7h7m-7 0H5" />
+                  <circle cx="12" cy="12" r="10" />
+                </svg>
+              </div>
+              <h3>Tech Training</h3>
+              <p>Courses, workshops, certification</p>
+              <div class="card-meta"><span>🎓 Weekly</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="cv">
-              <div class="card-icon">📄</div>
-              <div class="card-name">CV & Resume</div>
-              <div class="card-sub">Writing, formatting, review</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                </svg>
+              </div>
+              <h3>CV & Resume</h3>
+              <p>Writing, formatting, review</p>
+              <div class="card-meta"><span>⚡ 24h</span><span>⭐ 4.9</span></div>
             </div>
             <div class="service-card" data-service="profile">
-              <div class="card-icon">👔</div>
-              <div class="card-name">Profile Optimization</div>
-              <div class="card-sub">LinkedIn, job profiles</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+              <h3>Profile Optimization</h3>
+              <p>LinkedIn, Fiverr, Upwork, portfolio</p>
+              <div class="card-meta"><span>⚡ 1-2 days</span><span>⭐ 4.8</span></div>
             </div>
             <div class="service-card" data-service="career">
-              <div class="card-icon">🎯</div>
-              <div class="card-name">Career Coaching</div>
-              <div class="card-sub">Guidance, certifications</div>
+              <div class="card-icon">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M12 2v4M4.93 4.93l2.83 2.83M2 12h4M4.93 19.07l2.83-2.83M12 22v-4M19.07 19.07l-2.83-2.83M22 12h-4M19.07 4.93l-2.83 2.83"
+                  />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+              <h3>Career Coaching</h3>
+              <p>Guidance, interviews, certifications</p>
+              <div class="card-meta"><span>🎯 1-on-1</span><span>⭐ 5.0</span></div>
             </div>
           </div>
         </div>
@@ -355,14 +743,126 @@
         <h2 class="modal-title"></h2>
         <p class="modal-description"></p>
         <div class="modal-features"></div>
+        <div class="modal-meta">
+          <div class="meta-item">
+            <i class="fas fa-clock"></i> <span id="modalTurnaround"></span>
+          </div>
+          <div class="meta-item"><i class="fas fa-star"></i> <span id="modalRating"></span></div>
+        </div>
         <div class="modal-actions">
           <a href="https://wa.me/265881375396" class="modal-wa" target="_blank">
-            <i class="fab fa-whatsapp"></i> Get Quote
+            <i class="fab fa-whatsapp"></i> Book via WhatsApp
           </a>
-          <a href="tel:+265881375396" class="modal-call"> <i class="fas fa-phone"></i> Call Now </a>
+          <a href="#booking" class="modal-book" id="modalBookBtn">
+            <i class="fas fa-calendar-check"></i> Book Now
+          </a>
         </div>
       </div>
     </div>
+
+    <!-- Our Work / Portfolio Section -->
+    <section class="portfolio" id="work">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Our Work</div>
+          <h2 class="section-title">
+            Real Results, <span class="gradient-text">Real Clients</span>
+          </h2>
+          <p class="section-desc">See what we've built and repaired for clients across Malawi</p>
+        </div>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <div class="portfolio-image"><div class="image-placeholder">📱</div></div>
+            <div class="portfolio-info">
+              <h3>iPhone 12 Pro Max</h3>
+              <p>Screen replacement + water damage repair — completed in 2 hours</p>
+              <span class="client-name">— Peter M., Blantyre</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-image"><div class="image-placeholder">💻</div></div>
+            <div class="portfolio-info">
+              <h3>Dell XPS 15</h3>
+              <p>SSD upgrade + full system optimization — 45% faster boot</p>
+              <span class="client-name">— Grace K., Lilongwe</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-image"><div class="image-placeholder">🌐</div></div>
+            <div class="portfolio-info">
+              <h3>E-commerce Store</h3>
+              <p>Custom Shopify store with payment integration — 200+ orders/month</p>
+              <span class="client-name">— Zathu Crafts, Zomba</span>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-image"><div class="image-placeholder">🎨</div></div>
+            <div class="portfolio-info">
+              <h3>Brand Identity Package</h3>
+              <p>Logo, business cards, and social media kit for new startup</p>
+              <span class="client-name">— Mwai Tech, Blantyre</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">Testimonials</div>
+          <h2 class="section-title">Trusted by <span class="gradient-text">500+ Clients</span></h2>
+          <p class="section-desc">Real stories from real people</p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              "KandoTech fixed my phone in under 2 hours while I waited. Professional, friendly, and
+              affordable. Will definitely come back!"
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">TM</div>
+              <div><strong>Thandie M.</strong><span>Lilongwe</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              "They built our company website from scratch. The team understood exactly what we
+              needed and delivered ahead of schedule."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">JK</div>
+              <div><strong>James K.</strong><span>Blantyre</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              "Got my laptop running like new after a virus attack. Fast service and great
+              communication throughout."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">RC</div>
+              <div><strong>Rachel C.</strong><span>Zomba</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">
+              "Trained our team on cybersecurity basics. Very practical, hands-on session. Highly
+              recommend their training programs."
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">MB</div>
+              <div><strong>Michael B.</strong><span>Mzuzu</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- About Section -->
     <section class="about" id="about">
@@ -378,34 +878,40 @@
               premium tech services across Malawi. Based in Blantyre, we combine technical expertise
               with local understanding to provide solutions that truly work.
             </p>
+            <div class="team-preview">
+              <div class="team-member">
+                <div class="member-avatar">C</div>
+                <div><strong>Chikondi</strong><span>Lead Technician</span></div>
+              </div>
+              <div class="team-member">
+                <div class="member-avatar">M</div>
+                <div><strong>Mary</strong><span>Software Dev</span></div>
+              </div>
+              <div class="team-member">
+                <div class="member-avatar">J</div>
+                <div><strong>James</strong><span>Hardware Specialist</span></div>
+              </div>
+              <div class="team-member">
+                <div class="member-avatar">P</div>
+                <div><strong>Peter</strong><span>Mobile Repair</span></div>
+              </div>
+            </div>
             <div class="info-grid">
               <div class="info-item">
                 <i class="fas fa-clock"></i>
-                <div>
-                  <strong>Business Hours</strong>
-                  <span>Sunday - Friday: 8AM - 6PM</span>
-                </div>
+                <div><strong>Business Hours</strong><span>Sunday - Friday: 8AM - 6PM</span></div>
               </div>
               <div class="info-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <div>
-                  <strong>Location</strong>
-                  <span>Blantyre, Malawi</span>
-                </div>
+                <div><strong>Location</strong><span>Blantyre, Malawi</span></div>
               </div>
               <div class="info-item">
-                <i class="fas fa-users"></i>
-                <div>
-                  <strong>Team Size</strong>
-                  <span>4 Expert Technicians</span>
-                </div>
+                <i class="fas fa-trophy"></i>
+                <div><strong>Experience</strong><span>5+ years serving Malawi</span></div>
               </div>
               <div class="info-item">
-                <i class="fas fa-envelope"></i>
-                <div>
-                  <strong>Email</strong>
-                  <span>kandotech21@gmail.com</span>
-                </div>
+                <i class="fas fa-shield-alt"></i>
+                <div><strong>Warranty</strong><span>30-day guarantee on repairs</span></div>
               </div>
             </div>
           </div>
@@ -419,9 +925,35 @@
               <div class="stat-label">Satisfaction %</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number">24/7</div>
-              <div class="stat-label">Support Available</div>
+              <div class="stat-number">30</div>
+              <div class="stat-label">Day Warranty</div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking" id="booking">
+      <div class="container">
+        <div class="booking-card">
+          <div class="booking-content">
+            <div class="booking-badge">⚡ Book in 60 seconds</div>
+            <h2>Ready to get started?</h2>
+            <p>Tell us what you need, and we'll get back to you within minutes.</p>
+            <div class="booking-buttons">
+              <a
+                href="https://wa.me/265881375396?text=Hi%20KandoTech%2C%20I%27d%20like%20to%20book%20a%20service%3A"
+                target="_blank"
+                class="btn-primary"
+              >
+                <i class="fab fa-whatsapp"></i> Book via WhatsApp
+              </a>
+              <a href="tel:+265881375396" class="btn-secondary">
+                <i class="fas fa-phone-alt"></i> Call to Book
+              </a>
+            </div>
+            <p class="booking-note">📱 Response in &lt;5 minutes · Free consultation</p>
           </div>
         </div>
       </div>
@@ -441,7 +973,7 @@
             <div>
               <h3>Call Us</h3>
               <p>0881 375 396</p>
-              <span class="contact-sub">Available during business hours</span>
+              <span>Available during business hours</span>
             </div>
           </a>
           <a href="https://wa.me/265881375396" target="_blank" class="contact-card whatsapp">
@@ -449,7 +981,7 @@
             <div>
               <h3>WhatsApp</h3>
               <p>0881 375 396</p>
-              <span class="contact-sub response-badge">⚡ Typically replies in &lt;5 minutes</span>
+              <span class="response-badge">⚡ Reply in &lt;5 minutes</span>
             </div>
           </a>
           <a href="mailto:kandotech21@gmail.com" class="contact-card">
@@ -457,7 +989,7 @@
             <div>
               <h3>Email Us</h3>
               <p>kandotech21@gmail.com</p>
-              <span class="contact-sub">We reply within 24h</span>
+              <span>We reply within 24h</span>
             </div>
           </a>
           <div class="contact-card location">
@@ -465,7 +997,7 @@
             <div>
               <h3>Visit Us</h3>
               <p>Blantyre, Malawi</p>
-              <span class="contact-sub">Sun-Fri: 8AM - 6PM</span>
+              <span>Sun-Fri: 8AM - 6PM</span>
             </div>
           </div>
         </div>
@@ -488,6 +1020,7 @@
           <h4>Quick Links</h4>
           <a href="#home">Home</a>
           <a href="#services">Services</a>
+          <a href="#work">Our Work</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </div>
@@ -502,13 +1035,11 @@
           <h4>Business Hours</h4>
           <p>Sunday - Friday: 8AM - 6PM</p>
           <p>Saturday: Closed</p>
+          <p class="warranty-badge">🔧 30-day warranty on all repairs</p>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>
-          &copy; 2026 KandoTech Solutions. All rights reserved. Built with
-          <i class="fas fa-heart"></i> in Malawi
-        </p>
+        <p>&copy; 2026 KandoTech Solutions. Built with <i class="fas fa-heart"></i> in Malawi</p>
       </div>
     </footer>
 
